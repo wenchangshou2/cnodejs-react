@@ -2,6 +2,7 @@ import React from 'react';
 import {Row, Col} from 'antd';
 import {Input, Icon,Menu} from 'antd';
 const SubMenu = Menu.SubMenu;
+import {Link} from 'react-router-dom';
 export default class PCHeader extends React.Component {
     constructor(props){
         super(props);
@@ -37,13 +38,19 @@ export default class PCHeader extends React.Component {
                         style={{background:"#444444"}}
                         >
                         <Menu.Item key="Home">
+                        <Link to={'/'}>
                             首页
+                        </Link>
                         </Menu.Item>
                         <Menu.Item key="getstart">
+                        <Link to={'/getstart'}>
                             新手入门
+                        </Link>
                         </Menu.Item>
                         <Menu.Item key="api">
+                        <Link to={'/api'}>
                         API
+                        </Link>
                         </Menu.Item>
                         <Menu.Item key="about">
                         关于
