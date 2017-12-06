@@ -58,9 +58,9 @@ export default class PageList extends React.Component {
             <div>
                 <Row style={index==0?{marginBottom:'10px'}:{marginBottom:'10px',borderTop:'1px solid #f0f0f0'}}>
                     <Col span={1}>
-                        <a href={`/usr/${itm.author.loginname}`} className="user_avatar">
+                        <Link to={`/user/${itm.author.loginname}`} className="user_avatar">
                             <img src={itm.author.avatar_url} title={itm.author.loginname}/>
-                        </a>
+                        </Link>
                     </Col>
                     <Col span={2}>
                         <span title="回复数" className="count_of_replies">
@@ -88,9 +88,9 @@ export default class PageList extends React.Component {
                         </div>
                     </Col>
                     <Col span={2}>
-                        <a href={`/usr/${itm.author.loginname}`} className="user_small_avatar">
+                        <Link to={`/user/${itm.author.loginname}`} className="user_small_avatar">
                             <img src={itm.author.avatar_url} title={itm.author.loginname}/>
-                        </a>
+                        </Link>
                         &nbsp;&nbsp;
                         {transformDate(itm.last_reply_at)}
 

@@ -18,9 +18,9 @@ export default class PCHeader extends React.Component {
 
                     <Col span={1}></Col>
                     <Col span={2}>
-                        <a href="#" className="brand">
+                        <Link to="/" className="brand">
                             <img src="/src/images/cnodejs_light.svg"/>
-                        </a>
+                        </Link>
                     </Col>
                     <Col span={4}>
                         <Input 

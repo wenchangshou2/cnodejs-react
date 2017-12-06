@@ -5,11 +5,12 @@ import PCHeader from './components/PCHeader';
 import PCHome from './components/PCHome';
 import PCfooter from './components/PCFooter';
 import PCStart from './components/PCStart';
-import PCTopic from './components/PCTopic';
+import PCTopics from './components/PCTopics';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 // import reducer from './reducers'
 import reducer from './reducers';
+import {BackTop} from 'antd';
 // const store = createStore(reducer)
 const store = createStore(reducer);
 import {
@@ -18,6 +19,7 @@ import {
     Link
   } from 'react-router-dom'
 import PCApi from './components/PCApi';
+import PCUser from './components/PCUser';
 
 
 export default class Root extends React.Component{
@@ -32,8 +34,10 @@ export default class Root extends React.Component{
                     <Route exact path="/" component={PCHome}/>
                     <Route path="/getstart" component={PCStart}/>
                     <Route path="/api" component={PCApi}/>
-                    <Route path="/topic/:id" component={PCTopic}/>
+                    <Route path="/topic/:id" component={PCTopics}/>
+                    <Route path="/user/:id" component={PCUser}/>
                     <PCfooter/>
+                    <BackTop/>
                 </div>
             </Router>
             </div>

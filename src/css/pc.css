@@ -73,7 +73,7 @@ img{
 .topic_title_wrapper{
     white-space: nowrap;
 }
-a.topic_title{
+a.topic_title3{
     max-width: 70%;
     white-space: nowrap;
     font-size: 16px;
@@ -133,4 +133,77 @@ a.topic_title{
     vertical-align: bottom;
     width:75%;
     line-height: 130%;
+}
+.cell{
+    position: relative;
+    padding:10px 0 10px 10px;
+    font-size: 14px;
+    padding-right: 10px;
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+}
+.author_content .user_avatar{
+    display: inline-block;
+    float:left;
+}
+a{
+    color:#08c;
+    text-decoration: none;
+}
+.user_info{
+    margin-left: 10px;
+    display: inline-block;
+}
+.reply_time{
+    font-size:11px;
+}
+.reply_by_author{
+    color:#fff;
+    background-color: #6ba44e;
+    padding:2px;
+    font-size: 12px;
+}
+.user_action{
+    font:right;
+    margin-left: 20px;
+    font-size: 15px;
+}
+.fa{
+    font:normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+
+}
+.fa .fa-stack{
+    display: inline-block;
+}
+.up_btn{
+    cursor:pointer;
+    opacity: .4;
+}
+ul.unstyled{
+    margin-left: 0;
+    list-style: none;
+}
+.topic_title2{
+    max-width:270px;
+    font-size: 14px;
+}
+.last_time{
+    font-size: 11px;
+    display: inline-block;
+    margin-left: 20px;
+    color:#777;
+}
+.last_time .last_active_time{
+    text-align: right;
+    min-width: 50px;
+    display: inline-block;
+    white-space: normal;
+}
+.pull-right{
+    float:right;
+}
+.pull-left{
+    float:left;
 }
