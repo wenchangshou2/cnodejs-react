@@ -59,6 +59,24 @@ export default class PCTopics extends React.Component {
             return '招聘'
         }
     }
+    componentWillReceiveProps(nextProps){
+
+        let topicId = this.props.match.params.id;
+        console.log(topicId);
+        let options = {
+            method: 'GET',
+            qs: {
+                mdrender: false
+            }
+        }
+        let requestUrl = `https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${false}`
+        fetch(requestUrl, options).then((response) => response.json()).then((data) => {
+            this.setState({news: data['data']})
+            this.getAuthorInfo(data['data']['author']['loginname'])
+
+        })
+        console.log('will update')
+    }
     render() {
         const {news, authorInfo} = this.state;
         if (news['author'] === undefined) 
