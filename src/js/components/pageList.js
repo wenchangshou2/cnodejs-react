@@ -4,8 +4,9 @@ import 'whatwg-fetch';
 import {Card,Row,Col,Pagination} from 'antd';
 import transformDate from '../../utils/transformDate';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-export default class PageList extends React.Component {
+class PageList extends React.Component {
     constructor(props) {
         super(props);
         this.state={
@@ -51,10 +52,11 @@ export default class PageList extends React.Component {
         console.log(timeDiff)
     }
     render() {
+        const {posts} =this.props
+        console.log('posts1111',posts)
         const {news} = this.state;
-        console.log(news)
-        const pageList=news.length?
-        news.map((itm,index)=>(
+        const pageList=posts.length?
+        posts.map((itm,index)=>(
             <div>
                 <Row style={index==0?{marginBottom:'10px'}:{marginBottom:'10px',borderTop:'1px solid #f0f0f0'}}>
                     <Col span={1}>
@@ -113,3 +115,19 @@ export default class PageList extends React.Component {
         )
     }
 }
+
+const mapStateToProps = state => {
+    const { selectedSubreddit, postsBySubreddit } = state
+    const {
+      items: posts
+    } = postsBySubreddit[selectedSubreddit] || {
+      isFetching: true,
+      items: []
+    }
+  
+    return {
+      posts
+    }
+  }
+
+export default connect(mapStateToProps)(PageList)

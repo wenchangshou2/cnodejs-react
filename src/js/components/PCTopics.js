@@ -1,12 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import {
-    Row,
-    Col,
-    Card,
-    Button,
-    Avatar
-} from 'antd';
+import {Card, Button, Avatar, Row, Col} from 'antd';
 import {Link} from 'react-router-dom';
 import ListHeader from './listHeader';
 import PageList from './pageList';
@@ -24,7 +18,7 @@ export default class PCTopics extends React.Component {
         }
 
     }
-    componentWillMount() {
+    getTopicList() {
         let topicId = this.props.match.params.id;
         console.log(topicId);
         let options = {
@@ -59,7 +53,7 @@ export default class PCTopics extends React.Component {
             return '招聘'
         }
     }
-    componentWillReceiveProps(nextProps){
+    componentWillMount(nextProps) {
 
         let topicId = this.props.match.params.id;
         console.log(topicId);
@@ -78,6 +72,7 @@ export default class PCTopics extends React.Component {
         console.log('will update')
     }
     render() {
+        console.log('render');
         const {news, authorInfo} = this.state;
         if (news['author'] === undefined) 
             return ''
@@ -117,9 +112,9 @@ export default class PCTopics extends React.Component {
                 </div>
             ))
             : ''
-        let recent_topics=[]
-        if(authorInfo['recent_topics']!=undefined){
-            recent_topics=authorInfo['recent_topics'].map((itm,index)=>(
+        let recent_topics = []
+        if (authorInfo['recent_topics'] != undefined) {
+            recent_topics = authorInfo['recent_topics'].map((itm, index) => (
                 <li>
                     <div>
                         <Link className="topic_title2" to={`/topic/${itm.id}`} title={itm.title}>
@@ -129,7 +124,7 @@ export default class PCTopics extends React.Component {
 
                 </li>
             ))
-            recent_topics=recent_topics.splice(5)
+            recent_topics = recent_topics.splice(5)
         }
 
         return (
@@ -164,7 +159,13 @@ export default class PCTopics extends React.Component {
                             <ReactMarkdown source={news.content} mode="skip"/>,
                         </div>
 
-                        <Card title={`${news.reply_count}条回答`}>
+                        <Card
+                            title={`${news.reply_count}条回答`}
+                            style={{
+                            display: news.reply_count == 0
+                                ? 'none'
+                                : ''
+                        }}>
                             {replies_array}
                         </Card>
                     </Col>
@@ -193,9 +194,9 @@ export default class PCTopics extends React.Component {
                             </div>
                         </Card>
                         <Card title="作者其它的话题" className="mtp10">
-                        <ul className="unstyled">
-                            {recent_topics}
-                        </ul>
+                            <ul className="unstyled">
+                                {recent_topics}
+                            </ul>
                         </Card>
                     </Col>
                 </Row>

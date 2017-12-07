@@ -1,36 +1,50 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { fetchPostsIfNeeded } from '../actions/index';
 // import {changeTag} from '../actions';
-import {add} from '../actions';
-let mapStateToProps=(state)=>{
-    console.log('state1:',state)
-    return {
-        defaultState:state
+class  listHeader extends React.Component{
+    componentDidMount(){
+        const {dispatch,selectedSubreddit}=this.props;
+        // dispatch(fetchPostsIfNeeded('share'))
     }
-}
-const mapDispatchToProps=(dispatch,defaultSTate,ownProps)=>({
-    onClick:()=>{
-        dispatch(add(5))
-    }
-})
-let listHeader=({dispatch,defaultState,onClick})=>{
+    handleChange = tab => {
+        console.log('chhange',tab)
+        this.props.dispatch(fetchPostsIfNeeded(tab))
+      }
+    render(){
+        const {selectedSubreddit,posts,isFetching,lastUpdated} = this.props
+        console.log('props',this.props)
         return (
             <div className="panel_header">
-                <a href="#" onClick={e=>{
-                    e.preventDefault();
-                    onClick()
-                }} className="topic-tab">全部</a>
+                <a href="#" onClick={this.handleChange.bind(this,'job')} className="topic-tab">全部</a>
                 <a href="#" className="topic-tab">精华</a>
                 <a href="#" className="topic-tab">分享</a>
                 <a href="#" className="topic-tab">问答</a>
                 <a href="#" className="topic-tab">招聘</a>
-                <a href="#" className="topic-tab">客户端测试{defaultState}</a>
+                <a href="#" className="topic-tab">客户端测试</a>
             </div>
         )
-
+    }
 }
-listHeader=connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(listHeader);
-export default listHeader;
+const mapStateToProps = state => {
+    const { selectedSubreddit, postsBySubreddit } = state
+    const {
+      isFetching,
+      lastUpdated,
+      items: posts
+    } = postsBySubreddit[selectedSubreddit] || {
+      isFetching: true,
+      items: []
+    }
+  
+    return {
+      selectedSubreddit,
+      posts,
+      isFetching,
+      lastUpdated
+    }
+  }
+  
+
+
+export default connect(mapStateToProps)(listHeader);

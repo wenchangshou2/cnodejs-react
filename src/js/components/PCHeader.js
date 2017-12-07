@@ -3,6 +3,7 @@ import {Row, Col} from 'antd';
 import {Input, Icon,Menu} from 'antd';
 const SubMenu = Menu.SubMenu;
 import {Link} from 'react-router-dom';
+// import {selectSubreddit,fetchPostsIfNeeded,invalidateSubreddit} from '../actions'
 export default class PCHeader extends React.Component {
     constructor(props){
         super(props);
