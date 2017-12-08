@@ -6,20 +6,20 @@ import PCHome from './components/PCHome';
 import PCfooter from './components/PCFooter';
 import PCStart from './components/PCStart';
 import PCTopics from './components/PCTopics';
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 // import reducer from './reducers'
 import reducer from './reducers';
-import {BackTop} from 'antd';
+import { BackTop } from 'antd';
 
-const middleware=[thunk]
+const middleware = [thunk];
 // const store = createStore(reducer)
-const store = createStore(reducer,applyMiddleware(...middleware));
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+const store = createStore(reducer, applyMiddleware(...middleware));
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import PCApi from './components/PCApi';
 import PCUser from './components/PCUser';
-import { applyMiddleware } from '../../../../../../Users/wcs/Library/Caches/typescript/2.6/node_modules/redux';
+import { applyMiddleware } from 'redux';
 export default class Root extends React.Component {
     render() {
         return (
@@ -43,6 +43,8 @@ export default class Root extends React.Component {
             </div>
         )
     }
-}
+};
+
 ReactDOM.render(
-    <Root/>, document.getElementById('mainContainer'));
+  <Root />, document.getElementById('mainContainer')
+);

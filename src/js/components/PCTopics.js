@@ -1,37 +1,32 @@
 import React from "react";
 
-import {Card, Button, Avatar, Row, Col} from 'antd';
-import {Link} from 'react-router-dom';
-import ListHeader from './listHeader';
-import PageList from './pageList';
-import PCRightPanel from './PCRightPanel';
-const ReactMarkdown = require('react-markdown')
+import { Card, Avatar, Row, Col } from 'antd';
+import { Link } from 'react-router-dom';
+let ReactMarkdown = require('react-markdown');
 import transformDate from '../../utils/transformDate';
 
 // import App from './App'
 export default class PCTopics extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            news: '',
-            authorInfo: ''
-        }
-
-    }
-    getTopicList() {
-        let topicId = this.props.match.params.id;
-        console.log(topicId);
-        let options = {
-            method: 'GET',
-            qs: {
-                mdrender: false
-            }
-        }
-        let requestUrl = `https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${false}`
-        fetch(requestUrl, options).then((response) => response.json()).then((data) => {
-            this.setState({news: data['data']})
-            this.getAuthorInfo(data['data']['author']['loginname'])
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      news: '',
+      authorInfo: ''
+    };
+  }
+  getTopicList() {
+    let topicId = this.props.match.params.id;
+    console.log(topicId);
+    let options = {
+      method: 'GET',
+      qs: {
+        mdrender: false
+      },
+    };
+    const requestUrl = `https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${false}`;
+    fetch(requestUrl, options).then((response) => response.json()).then((data) => {
+      this.setState({news: data['data']});
+      this.getAuthorInfo(data['data']['author']['loginname']);
         })
     }
     getAuthorInfo(user) {
