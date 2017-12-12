@@ -1,7 +1,7 @@
 import Item from 'antd/lib/transfer/item';
 import React from 'react';
 import 'whatwg-fetch';
-import {Card,Row,Col,Pagination} from 'antd';
+import { Card, Row, Col, Pagination, Spin, Alert } from 'antd';
 import transformDate from '../../utils/transformDate';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
@@ -35,7 +35,7 @@ class PageList extends React.Component {
         }
         switch(tab){
             case 'share':
-                return '共享'
+                return '分享'
             case 'ask':
                 return '问答'
             case 'job':
@@ -51,7 +51,17 @@ class PageList extends React.Component {
         let timeDiff= (now-time)/1000
         console.log(timeDiff)
     }
+    onChange(pageNumber){
+        console.log(pageNumber)
+    }
     render() {
+        const container = (
+            <Alert
+              message="Alert message title"
+              description="Further details about the context of this alert."
+              type="info"
+            />
+          );
         const {posts} =this.props
         console.log('posts1111',posts)
         const {news} = this.state;
@@ -107,9 +117,11 @@ class PageList extends React.Component {
         return (
             <div>
                 <Card bordered={false}>
-                    {pageList}
+                    <Spin spinning={!posts.length>0} size="large" delay={100} >
+                        {pageList}
+                    </Spin>
 
-                    <Pagination defaultCurrent={1} total={100}/>
+                    <Pagination defaultCurrent={1} total={100} onChange={this.onChange}/>
                 </Card>
             </div>
         )
@@ -118,15 +130,17 @@ class PageList extends React.Component {
 
 const mapStateToProps = state => {
     const { selectedSubreddit, postsBySubreddit } = state
-    const {
-      items: posts
-    } = postsBySubreddit[selectedSubreddit] || {
-      isFetching: true,
-      items: []
-    }
-  
+    console.log('postsssssss',postsBySubreddit)
+    // const {
+    //   posts: post
+    // } = postsBySubreddit['post'] || {
+    //   isFetching: true,
+    //   items: []
+    // }
+    // console.log('posts1111111',posts)
+    const posts =postsBySubreddit['post']||[]
     return {
-      posts
+        posts
     }
   }
 

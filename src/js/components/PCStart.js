@@ -24,7 +24,7 @@ export default class PCStart extends React.Component {
                     <Col span={13}>
                         <Card title={''}>
                             {/* <ReactMarkdown source={input} />, */}
-                            <div class="markdown-text"><h2>Node.js 入门</h2>
+                            <div className="markdown-text"><h2>Node.js 入门</h2>
                         <p>《<strong>快速搭建 Node.js 开发环境以及加速 npm</strong>》</p>
                         <p><a href="http://fengmk2.com/blog/2014/03/node-env-and-faster-npm.html" target="_blank">http://fengmk2.com/blog/2014/03/node-env-and-faster-npm.html</a></p>
                         <p>《<strong>Node.js 包教不包会</strong>》</p>

@@ -8,6 +8,7 @@ const selectedSubreddit = (state ='job', action) => {
   console.log('selectedSubreddit',action,action.type,state)
   switch (action.type) {
     case SELECT_SUBREDDIT:
+    return 'post'
       return action.subreddit
     default:
       return state
@@ -50,9 +51,12 @@ const postsBySubreddit = (state = { }, action) => {
     case INVALIDATE_SUBREDDIT:
     case RECEIVE_POSTS:
     case REQUEST_POSTS:
+      if(action['posts']==undefined){
+        return {}
+      }
       return {
         ...state,
-        [action.subreddit]: posts(state[action.subreddit], action)
+        ['post']: action['posts']
       }
     default:
       return state

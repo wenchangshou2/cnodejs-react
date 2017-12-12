@@ -21,7 +21,7 @@ export default class PCFooter extends React.Component{
                             <img src="//dn-cnode.qbox.me/FuIpEaM9bvsZKnQ3QfPtBHWQmLM9" title="ucloud" alt="ucloud" style={{width:'92px'}}/>
                             </a>
                             ，存储赞助商为
-            < a href = "http://www.qiniu.com/?ref=cnode" target = "_blank" class = "sponsor_outlink" > <img
+            < a href = "http://www.qiniu.com/?ref=cnode" target = "_blank" className = "sponsor_outlink" > <img
                 src="//dn-cnode.qbox.me/Fg0jtDIcTqVC049oVu5-sn6Om4NX"
                 title="七牛云存储"
                 alt="七牛云存储"

@@ -80,13 +80,13 @@ export default class PCTopics extends React.Component {
         var replies_array = len > 0
             ? news['replies'].map((itm, index) => (
                 <div className="cell reply_area reply_item" reply_id={itm.id}>
-                    <div class="author_content">
+                    <div className="author_content">
                         <Link to={`/user/${itm.author.loginname}`} className="user_avatar">
                             <img src={itm.author.avatar_url} title={itm.author.loginname}/>
                         </Link>
                         <div className="user_info">
-                            <Link class="dark reply_author" to={`/user/${itm.author.loginname}`}>{itm.author.loginname}</Link>
-                            <Link class="reply_time" to={`#${itm.id}`}>{index + 1}楼 {transformDate(itm.create_at)}</Link>
+                            <Link className="dark reply_author" to={`/user/${itm.author.loginname}`}>{itm.author.loginname}</Link>
+                            <Link className="reply_time" to={`#${itm.id}`}>{index + 1}楼 {transformDate(itm.create_at)}</Link>
                         </div>
                         <div className="user_action">
                             <span>
@@ -180,12 +180,12 @@ export default class PCTopics extends React.Component {
                                 </span>
                                 <div className="board clearfix">
                                     <div className="floor">
-                                        <span class="big">积分： {authorInfo.score}
+                                        <span className="big">积分： {authorInfo.score}
                                         </span>
                                     </div>
                                 </div>
                                 <div className="space clearfix"></div>
-                                <span class="signature"></span>
+                                <span className="signature"></span>
                             </div>
                         </Card>
                         <Card title="作者其它的话题" className="mtp10">

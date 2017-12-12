@@ -11,7 +11,6 @@ export const requestPosts = subreddit => ({type: REQUEST_POSTS, subreddit})
 
 export const receivePosts = (subreddit, json) => ({
     type: RECEIVE_POSTS,
-    subreddit,
     posts: json,
     receivedAt: Date.now()
 })
