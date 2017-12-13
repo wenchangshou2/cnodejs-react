@@ -17,7 +17,7 @@ export const receivePosts = (subreddit, json) => ({
 
 const fetchPosts = subreddit => dispatch => {
     console.log('fetchPosts', `https://cnodejs.org/api/v1/topics?tab=${subreddit}`);
-    dispatch(requestPosts(subreddit))
+    // dispatch(requestPosts(subreddit))
     return fetch(`https://cnodejs.org/api/v1/topics?tab=${subreddit}`)
         .then(response => response.json())
         .then(json => {

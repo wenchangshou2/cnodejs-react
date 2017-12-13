@@ -6,6 +6,7 @@ import PCHome from './components/PCHome';
 import PCfooter from './components/PCFooter';
 import PCStart from './components/PCStart';
 import PCTopics from './components/PCTopics';
+import PCSignin from './components/PCSignin';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -34,6 +35,7 @@ export default class Root extends React.Component {
                                 <Route path="/api" component={PCApi}/>
                                 <Route path="/topic/:id" component={PCTopics}/>
                                 <Route path="/user/:id" component={PCUser}/>
+                                <Route path="/signin" component={PCSignin}/>
                                 <PCfooter/>
                                 <BackTop/>
                             </div>

@@ -207,3 +207,12 @@ ul.unstyled{
 .pull-left{
     float:left;
 }
+.panel .login-form{
+    max-width:500px;
+}
+.panel .login-form-forgot{
+    float:right;
+}
+.panel .login-form-button{
+    width:100%
+}

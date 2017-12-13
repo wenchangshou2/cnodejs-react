@@ -8,8 +8,21 @@ export default class PCHeader extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            searchValue:''
+            searchValue:'',
+            current: 'Home',
         }
+    }
+    selectMenu=(e)=>{
+        console.log('click ', e);
+        this.setState({
+          current: e.key,
+        });
+    }
+    toHome=(e)=>{
+        console.log('tohome')
+        this.setState({
+            current:'Home'
+        })
     }
     render() {
         const {searchValue} = this.state;
@@ -20,7 +33,7 @@ export default class PCHeader extends React.Component {
                     <Col span={1}></Col>
                     <Col span={2}>
                         <Link to="/" className="brand">
-                            <img src="/src/images/cnodejs_light.svg"/>
+                            <img src="/src/images/cnodejs_light.svg" onClick={this.toHome.bind(this)}/>
                         </Link>
                     </Col>
                     <Col span={4}>
@@ -37,6 +50,9 @@ export default class PCHeader extends React.Component {
                         mode="horizontal"
                         theme="dark"
                         style={{background:"#444444"}}
+                        defaultSelectedKeys={['Home']}
+                        // selectedKeys={[this.state.current]}
+                        onClick={this.selectMenu}
                         >
                         <Menu.Item key="Home">
                         <Link to={'/'}>
@@ -60,7 +76,9 @@ export default class PCHeader extends React.Component {
                         注册
                         </Menu.Item>
                         <Menu.Item key="login">
-                        登录
+                            <Link to={'/signin'}>
+                                登录
+                            </Link>
                         </Menu.Item>
                         </Menu>
                     </Col>
