@@ -13,6 +13,9 @@ import thunk from 'redux-thunk';
 // import reducer from './reducers'
 import reducer from './reducers';
 import { BackTop } from 'antd';
+import MediaQuery from 'react-responsive';
+import MobileHome from './components/MobileHome';
+
 
 const middleware = [thunk];
 // const store = createStore(reducer)
@@ -27,6 +30,7 @@ export default class Root extends React.Component {
             <div>
                 <Provider store={store}>
                     <div>
+                        <MediaQuery query="(min-device-width: 1224px)">
                         <Router>
                             <div>
                                 <PCHeader/>
@@ -40,6 +44,14 @@ export default class Root extends React.Component {
                                 <BackTop/>
                             </div>
                         </Router>
+                        </MediaQuery>
+                        <MediaQuery query="(max-device-width:1224px)">
+                            <Router>
+                                <div>
+                                    <Route exact path="/" component={MobileHome}/>
+                                </div>
+                            </Router>
+                        </MediaQuery>
                     </div>
                 </Provider>
             </div>
