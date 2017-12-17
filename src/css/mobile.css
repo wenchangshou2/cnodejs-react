@@ -25,3 +25,26 @@
     font-size: 20px;
     margin-right: 10px;
   }
+  .mobile_title{
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+  }
+  .mobile_article_extra{
+      position: relative;
+  }
+  .mobile_last_reply_at{
+      position: absolute;
+      right:-10px;
+  }
+
+  .mobile_user_avatar img{
+      width:40px;
+      height:40px;
+      border-radius: 20px;
+    text-align:center;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    margin-left: -20px; /* 宽度的一半 */
+  }
