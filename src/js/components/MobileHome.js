@@ -1,5 +1,5 @@
 import React from 'react';
-import MobileHeader from './MobileHeader';
+// import MobileHeader from './MobileHeader';
 import {Tabs,BackTop,Affix} from 'antd';
 const TabPane = Tabs.TabPane;
 import MobileList from './MobileList';
@@ -7,7 +7,7 @@ class MobileHome extends React.Component{
     render(){
         return(
             <div>
-            <MobileHeader/>
+            {/* <MobileHeader/> */}
                 <Tabs>
                     <TabPane tab="全部" key="1">
                         <MobileList type="all"/>

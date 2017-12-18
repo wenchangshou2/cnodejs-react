@@ -79,29 +79,31 @@ class MobileList extends React.Component{
                     </Link>
                 </Col>
                 <Col span={17}>
-                    <section className="mobile_article">
-                        <header className="">
-                           <div className="mobile_title">
-                           {this.isGood(newsItem.good)}{this.isTop(newsItem.top)} 
-                           &nbsp;&nbsp;{newsItem.title}</div>
-                        </header>
-                        <p className="mobile_article_extra">
-                            <span className="mobile_reply_count">
-                                {newsItem.reply_count}
-                            </span>
-                            /
-                            <span className="mobile_visit_count">
-                                {newsItem.visit_count}
-                            </span>
-                            &nbsp;&nbsp;
-                            <span className="mobile_tab">
-                                {this.strToTop(newsItem.good,newsItem.top,newsItem.tab)}
-                            </span>
-                            <span className="mobile_last_reply_at">
-                                {transformDate(newsItem.create_at)}
-                            </span>
-                        </p>
-                    </section>
+                    <Link to={`/topic/${newsItem.id}`}>
+                        <section className="mobile_article">
+                            <header className="">
+                            <div className="mobile_title">
+                            {this.isGood(newsItem.good)}{this.isTop(newsItem.top)} 
+                            &nbsp;&nbsp;{newsItem.title}</div>
+                            </header>
+                            <p className="mobile_article_extra">
+                                <span className="mobile_reply_count">
+                                    {newsItem.reply_count}
+                                </span>
+                                /
+                                <span className="mobile_visit_count">
+                                    {newsItem.visit_count}
+                                </span>
+                                &nbsp;&nbsp;
+                                <span className="mobile_tab">
+                                    {this.strToTop(newsItem.good,newsItem.top,newsItem.tab)}
+                                </span>
+                                <span className="mobile_last_reply_at">
+                                    {transformDate(newsItem.create_at)}
+                                </span>
+                            </p>
+                        </section>
+                    </Link>
                 </Col>
             </Row>
         )):'没有加载任何新闻'

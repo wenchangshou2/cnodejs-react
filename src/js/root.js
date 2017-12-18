@@ -15,6 +15,7 @@ import reducer from './reducers';
 import { BackTop } from 'antd';
 import MediaQuery from 'react-responsive';
 import MobileHome from './components/MobileHome';
+import MobileTopic from './components/MobileTopic';
 
 
 const middleware = [thunk];
@@ -49,6 +50,7 @@ export default class Root extends React.Component {
                             <Router>
                                 <div>
                                     <Route exact path="/" component={MobileHome}/>
+                                    <Route path="/topic/:id" component={MobileTopic}/>
                                 </div>
                             </Router>
                         </MediaQuery>
