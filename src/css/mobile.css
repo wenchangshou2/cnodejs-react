@@ -48,3 +48,8 @@
     left: 50%;
     margin-left: -20px; /* 宽度的一半 */
   }
+  .mobileIcon{
+      height: 80px;
+      width: 80px;
+      font-size: 16;
+  }

@@ -1,14 +1,20 @@
-import { combineReducers } from 'redux'
 import {
-  SELECT_SUBREDDIT, INVALIDATE_SUBREDDIT,
-  REQUEST_POSTS, RECEIVE_POSTS
+  combineReducers
+} from 'redux'
+import {
+  SELECT_SUBREDDIT,
+  INVALIDATE_SUBREDDIT,
+  REQUEST_POSTS,
+  RECEIVE_POSTS,
+  RECEIVE_TOPIC_POST
+
 } from '../actions'
 
-const selectedSubreddit = (state ='job', action) => {
-  console.log('selectedSubreddit',action,action.type,state)
+const selectedSubreddit = (state = 'job', action) => {
+  console.log('selectedSubreddit', action, action.type, state)
   switch (action.type) {
     case SELECT_SUBREDDIT:
-    return 'post'
+      return 'post'
       return action.subreddit
     default:
       return state
@@ -20,6 +26,7 @@ const posts = (state = {
   didInvalidate: false,
   items: []
 }, action) => {
+  console.log('posts', action)
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
       return {
@@ -40,18 +47,23 @@ const posts = (state = {
         items: action.posts,
         lastUpdated: action.receivedAt
       }
+    case RECEIVE_TOPIC_POST:
+      return {
+        ...state,
+        items: action.posts
+      }
     default:
       return state
   }
 }
 
-const postsBySubreddit = (state = { }, action) => {
-  console.log('postsBySubreddit',state)
+const postsBySubreddit = (state = {}, action) => {
+  console.log('postsBySubreddit', state)
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
     case RECEIVE_POSTS:
     case REQUEST_POSTS:
-      if(action['posts']==undefined){
+      if (action['posts'] == undefined) {
         return {}
       }
       return {
@@ -62,10 +74,32 @@ const postsBySubreddit = (state = { }, action) => {
       return state
   }
 }
+const postTopic=(state={},action)=>{
+  console.log('postTopic',action)
+  switch(action.type){
+    case INVALIDATE_SUBREDDIT:
+    case RECEIVE_POSTS:
+    case REQUEST_POSTS:
+    case RECEIVE_TOPIC_POST:
+      if(action['posts']==undefined){
+        return{}
+      }
+      return {
+        ...state,
+        ['topic']:action['posts']
+      }
+    default:
+      return{
+        ...state,
+        ['topic']:action['posts']
+      }
+  }
+}
 
 const rootReducer = combineReducers({
   postsBySubreddit,
-  selectedSubreddit
+  selectedSubreddit,
+  postTopic
 })
 
 export default rootReducer

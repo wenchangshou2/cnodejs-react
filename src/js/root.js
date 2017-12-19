@@ -16,9 +16,10 @@ import { BackTop } from 'antd';
 import MediaQuery from 'react-responsive';
 import MobileHome from './components/MobileHome';
 import MobileTopic from './components/MobileTopic';
+import  logger from 'redux-logger';
 
 
-const middleware = [thunk];
+const middleware = [thunk,logger];
 // const store = createStore(reducer)
 const store = createStore(reducer, applyMiddleware(...middleware));
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
