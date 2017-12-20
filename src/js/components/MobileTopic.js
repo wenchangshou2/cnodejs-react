@@ -7,6 +7,8 @@ let ReactMarkdown = require('react-markdown');
 import {Link} from 'react-router-dom';
 
 import transformDate from '../../utils/transformDate';
+import 'github-markdown-css';
+
 
 class MobileTopic extends React.Component {
     constructor(props) {
@@ -60,8 +62,7 @@ class MobileTopic extends React.Component {
                     </Row>
                 </div>
                 <br/><br/>
-                <div className="mobile_reply_content">
-                    <ReactMarkdown source={reply.content} mode="skip"/>
+                <div className="mobile_reply_content markdown-body" dangerouslySetInnerHTML={{__html:reply.content}}>
                 </div>
             </div>
         )):''
@@ -69,13 +70,14 @@ class MobileTopic extends React.Component {
         return (
             <div>
                 <Affix >
-                    <Row type="flex"style={{height:'40px',backgroundColor:'rgb(0, 188, 212)'}}>
+                    <Row type="flex" style={{height:'40px',backgroundColor:'rgb(0, 188, 212)'}} >
                         <Col span={6}>
-                        <Icon type="rollback" className="mobileIcon"/>
-
+                            <Link to="/">
+                                <Icon type="rollback" className="mobileIcon" style={{fontSize:'30px'}}/>
+                            </Link>
                         </Col>
-                        <Col span={12} justify="center">
-                            详情
+                        <Col span={12}>
+                            文章详情
                         </Col>
                         <Col span={6}>
                         </Col>
@@ -92,7 +94,10 @@ class MobileTopic extends React.Component {
                 </div>
                 <hr/>
                 <div className="mobile_article_content">
-                    <ReactMarkdown source={topic.content} mode="skip"/>
+                    {/* <ReactMarkdown source={topic.content} mode="skip"/> */}
+                    <div class="markdown-body" dangerouslySetInnerHTML={{__html:topic.content}}>
+                        {/* {topic.content} */}
+                    </div>
                 </div>
                 <div className="mobile_article_reply">
                     <div>

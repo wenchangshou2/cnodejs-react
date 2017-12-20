@@ -2,15 +2,24 @@ import React from 'react';
 import {Row,Col,Divider} from 'antd';
 import {Link} from 'react-router-dom';
 import transformDate from '../../utils/transformDate';
-import ReactPullToRefresh from 'react-pull-to-refresh';
+// import ReactPullToRefresh from 'react-pull-to-refresh';
 import PropTypes from 'prop-types';
-var Infinite = require('react-infinite');
+import {lazyload} from 'react-lazyload';
+import InfiniteScroll from 'react-infinite-scroller';
+import {connect} from 'react-redux';
+import { fetchPostsIfNeeded } from '../actions/index';
+
+
 
 class MobileList extends React.Component{
     constructor(){
         super();
         this.state={
-            news:''
+            news:'',
+            page:1,
+            isMore:true,
+            loading: true,
+            hasMore: true
         };
     }
     handleScroll(e,force){
@@ -18,16 +27,39 @@ class MobileList extends React.Component{
     }
     componentDidMount()  {
         // setInterval(handleScroll,100)
+        setTimeout(() => {
+            this.setState({loading:false})
+        }, 3000);
     }
     componentWillMount(){
         var myFetchOptions={
             method:'GET'
         };
-        fetch(`https://cnodejs.org/api/v1/topics?tab=${this.props.type}`).then(response=>response.json()).then(json=>{
-            this.setState({
-                news:json['data']
-            })
-        })
+        // this.props.dispatch(fetchPostsIfNeeded(this.props.type,this.state.page))
+        // fetch(`https://cnodejs.org/api/v1/topics?tab=${this.props.type}`).then(response=>response.json()).then(json=>{
+        //     this.setState({
+        //         news:json['data']
+        //     })
+        // })
+    }
+    loadMore(){
+        console.log('lore moad')
+        // let {page}=this.state;
+        // console.log(page)
+        // this.setState({page:page+1})
+        // this.setState({
+        //     loading: true,
+        //   });
+        // // this.props.dispatch(fetchPostsIfNeeded(this.props.type))
+        // fetch(`https://cnodejs.org/api/v1/topics?tab=${this.props.type}&page=${this.state.page}`).then(response=>response.json()).then(json=>{
+        //     this.setState({
+        //         news:json['data']
+        //     })
+        // })
+        // this.setState({
+        //     loading: false
+        //   });
+
     }
     strToTop(isGood, isTop, tab) {
         if(isGood||isTop){
@@ -48,34 +80,17 @@ class MobileList extends React.Component{
     isGood=(good)=> good?<span style={{color:'red'}}>&nbsp;&nbsp;精</span>:''
     render(){
         const {news} = this.state;
-        console.log(news)
+        const {isMore,loading} =this.state
+        // const {posts}=this.props
+        // console.log(posts)
         const newsList = news.length
         ? news.map((newsItem,index)=>(
-            // <section key={index} className="">
-            //     <Link to={`/topic/${newsItem.id}`} >
-            //         <div className="m_article_info">
-            //             <div className="m_article_title">
-            //                 <span>{newsItem.title}</span>
-            //             </div>
-            //             <div className="m_article_desc">
-            //                 <span>
-            //                     {this.strToTop(newsItem['good'],newsItem['top'],newsItem['tab'])}
-            //                 </span>
-            //                 <span className="m_article_author">
-            //                     {newsItem['author']['loginname']}
-            //                 </span>
-            //                 <span className="m_article_post_time">
-            //                     {transformDate(newsItem['create_at'])}
-            //                 </span>
-            //             </div>
-            //         </div>
-            //     </Link>
-            //     <Divider />
-            // </section>
-            <Row >
+            <Row key={index}>
                 <Col span={5}>
                     <Link to={`/user/${newsItem.author.loginname}`} className="mobile_user_avatar">
-                        <img src={newsItem.author.avatar_url} title={newsItem.author.loginname} /> 
+                        <lazyload height={200} >
+                            <img src={newsItem.author.avatar_url} title={newsItem.author.loginname} /> 
+                        </lazyload>
                     </Link>
                 </Col>
                 <Col span={17}>
@@ -108,17 +123,30 @@ class MobileList extends React.Component{
             </Row>
         )):'没有加载任何新闻'
         return(
-            <div>
-                <Row>
-                    <Col span={24}>
-                            {newsList}
-                    </Col>
-                </Row>
-            </div>
+                <div style={{height:'700px',overflow:'auto'}}>
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={this.loadMore}
+                        hasMore={true || false}
+                        loader={<div className="loader">Loading ...</div>}
+                        useWindow={false}
+                    >
+                    <div>
+                        {newsList}
+                    </div>
+                    </InfiniteScroll>
+                </div>
+
         )
     }
 }
-MobileList.propTypes ={
-    news:PropTypes.object
+const mapStateToProps=state=>{
+    const {
+        postsBySubreddit
+    }=state
+    const posts = postsBySubreddit['post'] || []
+    return {
+        posts
+    }
 }
-export default MobileList;
+export default connect(mapStateToProps)(MobileList);

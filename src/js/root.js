@@ -17,6 +17,8 @@ import MediaQuery from 'react-responsive';
 import MobileHome from './components/MobileHome';
 import MobileTopic from './components/MobileTopic';
 import  logger from 'redux-logger';
+import 'github-markdown-css';
+
 
 
 const middleware = [thunk,logger];

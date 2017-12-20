@@ -20,17 +20,17 @@ export const receiveTopic=(json)=>({
     receivedAt:Date.now()
 })
 
-const fetchPosts = subreddit => dispatch => {
+const fetchPosts = (subreddit,page=1,limit=30,mdrender=false) => dispatch => {
     console.log('fetchPosts', `https://cnodejs.org/api/v1/topics?tab=${subreddit}`);
     // dispatch(requestPosts(subreddit))
-    return fetch(`https://cnodejs.org/api/v1/topics?tab=${subreddit}`)
+    return fetch(`https://cnodejs.org/api/v1/topics?tab=${subreddit}&page=${page}&limit=${limit}&mdrender=${mdrender}`)
         .then(response => response.json())
         .then(json => {
             dispatch(receivePosts(subreddit, json['data']))
             console.log('ll',json['data'])
         })
 }
-export const getArticlePost=(topicId,mdrender=false)=>dispatch=>{
+export const getArticlePost=(topicId,mdrender=true)=>dispatch=>{
     return fetch(`https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${mdrender}`)
     .then(response=>response.json())
     .then(json=>{
