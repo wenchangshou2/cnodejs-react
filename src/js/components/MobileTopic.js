@@ -7,7 +7,6 @@ let ReactMarkdown = require('react-markdown');
 import {Link} from 'react-router-dom';
 
 import transformDate from '../../utils/transformDate';
-import 'github-markdown-css';
 
 
 class MobileTopic extends React.Component {

@@ -16,11 +16,13 @@ class MobileList extends React.Component{
         super();
         this.state={
             news:'',
-            page:1,
+            page:2,
             isMore:true,
             loading: true,
-            hasMore: true
+            hasMore: true,
+            fetching:false,
         };
+        // this.loadMore=this.debounce(this.loadMore,600)
     }
     handleScroll(e,force){
         console.log(e,force)
@@ -43,24 +45,51 @@ class MobileList extends React.Component{
         // })
     }
     loadMore(){
+        const {fetching,page} = this.state
         console.log('lore moad')
         // let {page}=this.state;
         // console.log(page)
         // this.setState({page:page+1})
+        this.setState({
+            hasMore: false,
+        });
+        if(this.state.hasMore)
+        {
+            // fetch(`https://cnodejs.org/api/v1/topics?tab=${this.props.type}&page=${this.state.page}`).then(response=>response.json()).then(json=>{
+            //     this.setState({
+            //         news:json['data'],
+            //         hasMore:false
+            //     })
+            // })
+            // this.props.dispatch(fetchPostsIfNeeded(this.props.type,page,this.state.page))
+
+        }
+        this.props.dispatch(fetchPostsIfNeeded(this.props.type,this.state.page))
         // this.setState({
-        //     loading: true,
-        //   });
-        // // this.props.dispatch(fetchPostsIfNeeded(this.props.type))
-        // fetch(`https://cnodejs.org/api/v1/topics?tab=${this.props.type}&page=${this.state.page}`).then(response=>response.json()).then(json=>{
-        //     this.setState({
-        //         news:json['data']
-        //     })
+        //     // hasMore:true,
+        //     page:page+1
         // })
-        // this.setState({
-        //     loading: false
-        //   });
+
+        //   if(!fetching){
+        //       this.setState({
+        //           fetching:true
+        //       })
+
+        //   }
+        this.setState({
+            loading: false
+          });
 
     }
+    debounce(func, delay) {
+        let inDebounce
+        return function() {
+          const context = this
+          const args = arguments
+          clearTimeout(inDebounce)
+          inDebounce = setTimeout(() => func.apply(context, args), delay)
+        }
+      }
     strToTop(isGood, isTop, tab) {
         if(isGood||isTop){
             return '置顶'
@@ -80,11 +109,11 @@ class MobileList extends React.Component{
     isGood=(good)=> good?<span style={{color:'red'}}>&nbsp;&nbsp;精</span>:''
     render(){
         const {news} = this.state;
-        const {isMore,loading} =this.state
-        // const {posts}=this.props
-        // console.log(posts)
-        const newsList = news.length
-        ? news.map((newsItem,index)=>(
+        const {isMore,loading,hasMoreItems} =this.state
+        const {posts}=this.props
+        console.log(posts)
+        const newsList = posts.length
+        ? posts.map((newsItem,index)=>(
             <Row key={index}>
                 <Col span={5}>
                     <Link to={`/user/${newsItem.author.loginname}`} className="mobile_user_avatar">
@@ -125,11 +154,12 @@ class MobileList extends React.Component{
         return(
                 <div style={{height:'700px',overflow:'auto'}}>
                     <InfiniteScroll
-                        pageStart={0}
-                        loadMore={this.loadMore}
-                        hasMore={true || false}
+                        pageStart={1}
+                        loadMore={this.loadMore.bind(this)}
+                        hasMore={this.state.hasMore}
                         loader={<div className="loader">Loading ...</div>}
                         useWindow={false}
+                        threshold={1000}
                     >
                     <div>
                         {newsList}
@@ -144,6 +174,7 @@ const mapStateToProps=state=>{
     const {
         postsBySubreddit
     }=state
+    console.log('fffffffffffffff',state)
     const posts = postsBySubreddit['post'] || []
     return {
         posts

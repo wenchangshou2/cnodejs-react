@@ -81,13 +81,9 @@ const postTopic=(state={},action)=>{
     case RECEIVE_POSTS:
     case REQUEST_POSTS:
     case RECEIVE_TOPIC_POST:
-      if(action['posts']==undefined){
-        return{}
-      }
-      return {
-        ...state,
-        ['topic']:action['posts']
-      }
+      return Object.assign({},state,{
+        'topic':posts(action['posts'])
+      })
     default:
       return{
         ...state,

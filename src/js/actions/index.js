@@ -20,15 +20,21 @@ export const receiveTopic=(json)=>({
     receivedAt:Date.now()
 })
 
-const fetchPosts = (subreddit,page=1,limit=30,mdrender=false) => dispatch => {
+function fetchPosts(subreddit,page=1,limit=30,mdrender=false)  {
     console.log('fetchPosts', `https://cnodejs.org/api/v1/topics?tab=${subreddit}`);
     // dispatch(requestPosts(subreddit))
-    return fetch(`https://cnodejs.org/api/v1/topics?tab=${subreddit}&page=${page}&limit=${limit}&mdrender=${mdrender}`)
-        .then(response => response.json())
-        .then(json => {
-            dispatch(receivePosts(subreddit, json['data']))
-            console.log('ll',json['data'])
-        })
+    return dispatch =>{
+        console.log('ff11111')
+        dispatch(requestPosts(subreddit))
+        console.log('22222222222')
+        return fetch(`https://cnodejs.org/api/v1/topics?tab=${subreddit}&page=${page}&limit=${limit}&mdrender=${mdrender}`)
+            .then(response => response.json())
+            .then(json => {
+                console.log('json',json)
+                dispatch(receivePosts(subreddit, json['data']))
+                console.log('ll', json['data'])
+            })
+    }
 }
 export const getArticlePost=(topicId,mdrender=true)=>dispatch=>{
     return fetch(`https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${mdrender}`)
@@ -40,19 +46,24 @@ export const getArticlePost=(topicId,mdrender=true)=>dispatch=>{
 }
 
 const shouldFetchPosts = (state, subreddit) => {
-    const posts = state.postsBySubreddit[subreddit]
+    const posts = state.postsBySubreddit['post']
     if (!posts) {
+        console.log('111111111')
         return true
     }
     if (posts.isFetching) {
+        console.log('222222')
         return false
     }
     return posts.didInvalidate
 }
 
-export const fetchPostsIfNeeded = subreddit => (dispatch, getState) => {
-    console.log('fetchPostsIfNeeded', subreddit)
-    // if (shouldFetchPosts(getState(), subreddit)) {
-    return dispatch(fetchPosts(subreddit))
-    // }
-}
+export function fetchPostsIfNeeded(subreddit) {
+    return (dispatch, getState) => {
+        console.log('1122')
+      if (shouldFetchPosts(getState(), subreddit)) {
+          console.log('2233')
+        return dispatch(fetchPosts(subreddit))
+      }
+    }
+  }
