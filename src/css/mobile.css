@@ -14,17 +14,23 @@
 .m_article_info{
     color:#000;
 }
+#custom-back-top .ant-back-top{
+    right:20px;
+    bottom:10px;
+}
 .ant-back-top-inner {
-    height: 40px;
-    width: 40px;
+    /* height: 40px;
+    width: 40px; */
+    font-size: 30px;
     line-height: 40px;
-    border-radius: 4px;
+    /* border-radius: 4px;
     background-color: #1088e9;
     color: #fff;
     text-align: center;
     font-size: 20px;
-    margin-right: 10px;
+    right:10px; */
   }
+
   .mobile_title{
       overflow: hidden;
       white-space: nowrap;
@@ -49,9 +55,37 @@
     margin-left: -20px; /* 宽度的一半 */
   }
   .mobileIcon{
-      height: 80px;
-      width: 80px;
-      font-size: 16;
+      font-size: 20px;
+      position: absolute;
+      color:white;
+  }
+  .mobileTopicHeader{
+      height:400px;
+      padding-top: 10px;
+  }
+  .mobileTopicIcon{
+      display: flex;
+      display:-webkit-flex;
+      align-items: center;
+      justify-content: center;
+      height:100%;
+      width:100%;
+      background-color: red;
+
+  }
+  .mobileTopicTitle{
+      font-size: 20px;
+      color:white;
+      text-align: center;
+  }
+  .mobile_article_author{
+      background-color: aliceblue;
+      height:60px;
+  }
+  .mobile_article_author img{
+      width:50px;
+      height:50px;
+      border-radius: 50px;
   }
   .markdown-body {
     box-sizing: border-box;

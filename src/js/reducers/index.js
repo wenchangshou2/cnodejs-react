@@ -4,10 +4,12 @@ import {
 import {
   SELECT_SUBREDDIT,
   INVALIDATE_SUBREDDIT,
-  REQUEST_POSTS,
-  RECEIVE_POSTS,
-  RECEIVE_TOPIC_POST
-
+  RECEIVE_ARTICLE_LIST,
+  REQUEST_ARTICLE_LIST,
+  REQUEST_ARTICLE,
+  RECEIVE_ARTICLE,
+  SET_TAB,
+  RECEIVE_USER
 } from '../actions'
 
 const selectedSubreddit = (state = 'job', action) => {
@@ -21,81 +23,164 @@ const selectedSubreddit = (state = 'job', action) => {
   }
 }
 
-const posts = (state = {
+const articles = (state = {
   isFetching: false,
   didInvalidate: false,
   items: []
 }, action) => {
-  console.log('posts', action)
+  console.log('posts2222222', action)
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
       return {
         ...state,
         didInvalidate: true
       }
-    case REQUEST_POSTS:
+    case REQUEST_ARTICLE_LIST:
       return {
         ...state,
         isFetching: true,
         didInvalidate: false
       }
-    case RECEIVE_POSTS:
+    case RECEIVE_ARTICLE_LIST:
+      return Object.assign({}, state, {
+        isFetching:false,
+        didiInvalidate:false,
+        items:action.posts,
+        lastUpdated:action.receivedAt
+      })
+    // case RECEIVE_TOPIC_POST:
+    //   return Object.assign({},state,{
+    //     isFetching:false,
+    //     didiInvalidate:false,
+    //     topic:action.posts,
+    //     lastUpdated:action.receivedAt
+    //   })
+    default:
+      return state
+  }
+}
+const post = (state = {
+  isFetching: false,
+  didInvalidate: false,
+  topic: {}
+}, action) => {
+  console.log('posts2222222', action)
+  switch (action.type) {
+    case INVALIDATE_SUBREDDIT:
       return {
         ...state,
-        isFetching: false,
-        didInvalidate: false,
-        items: action.posts,
-        lastUpdated: action.receivedAt
+        didInvalidate: true
       }
-    case RECEIVE_TOPIC_POST:
+    case REQUEST_ARTICLE:
       return {
         ...state,
-        items: action.posts
+        isFetching: true,
+        didInvalidate: false
       }
+    case RECEIVE_ARTICLE:
+      return Object.assign({}, state, {
+        isFetching:false,
+        didiInvalidate:false,
+        topic:action.posts,
+        lastUpdated:action.receivedAt
+      })
+    // case RECEIVE_TOPIC_POST:
+    //   return Object.assign({},state,{
+    //     isFetching:false,
+    //     didiInvalidate:false,
+    //     topic:action.posts,
+    //     lastUpdated:action.receivedAt
+    //   })
     default:
       return state
   }
 }
 
-const postsBySubreddit = (state = {}, action) => {
-  console.log('postsBySubreddit', state)
-  switch (action.type) {
-    case INVALIDATE_SUBREDDIT:
-    case RECEIVE_POSTS:
-    case REQUEST_POSTS:
-      if (action['posts'] == undefined) {
-        return {}
-      }
-      return {
-        ...state,
-        ['post']: action['posts']
-      }
-    default:
-      return state
+const postTopic=(state={
+  isFetching:false,
+  didInvalidate:false,
+  topic:{
+    author:{},
+    replies:[],
   }
-}
-const postTopic=(state={},action)=>{
-  console.log('postTopic',action)
+},action)=>{
+  console.log('postTopic',state,action)
   switch(action.type){
     case INVALIDATE_SUBREDDIT:
     case RECEIVE_POSTS:
-    case REQUEST_POSTS:
     case RECEIVE_TOPIC_POST:
-      return Object.assign({},state,{
-        'topic':posts(action['posts'])
-      })
+        return Object.assign({},state,post(state,action))
     default:
-      return{
-        ...state,
-        ['topic']:action['posts']
-      }
+      return state
   }
 }
+const article_list=(state={
+  isFetching:false,
+  didInvalidate:false,
+  items:[]
+},action)=>{
+  switch(action.type){
+    case INVALIDATE_SUBREDDIT:
+    case REQUEST_ARTICLE_LIST:
+    case RECEIVE_ARTICLE_LIST:
+        return Object.assign({},state,articles(state,action))
+    default:
+      return state
+  }
 
+}
+const article=(state={
+  isFetching:false,
+  topic:{
+    author:{
+      avatar_url:''
+    },
+    replies:[]
+  }
+},action)=>{
+  switch(action.type){
+    case INVALIDATE_SUBREDDIT:
+    case REQUEST_ARTICLE:
+    case RECEIVE_ARTICLE:
+      return Object.assign({},state,post(state,action))
+    default:
+      return state
+
+  }
+}
+const user=(state={
+  user:{}
+},action)=>{
+  switch (action.type) {
+    case RECEIVE_USER:
+      return Object.assign({}, state,
+        Object.assign({}, state, {
+          user: action.user,
+          lastUpdated: action.receivedAt
+        }))
+      default:
+        return state;
+  }
+}
+const tab=(state={
+  tab:'all'
+},action)=>{
+  console.log('22',state,action)
+  const menu=state.tab
+  switch(action.type){
+    case SET_TAB:
+      console.log('settab',menu)
+      return {tab:action.tab};
+    default:
+      return state;
+
+  }
+}
 const rootReducer = combineReducers({
-  postsBySubreddit,
-  selectedSubreddit,
-  postTopic
+  // postsBySubreddit,
+  article_list,
+  article,
+  tab,user
 })
 
 export default rootReducer

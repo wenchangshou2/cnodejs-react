@@ -10,6 +10,8 @@ import {
     Alert
 } from 'antd';
 import transformDate from '../../utils/transformDate';
+import { fetchPostsIfNeeded } from '../actions/index';
+
 import {
     Link
 } from 'react-router-dom';
@@ -23,24 +25,6 @@ class PageList extends React.Component {
         this.state = {
             news: ''
         }
-    }
-    componentWillMount() {
-        let options = {
-            method: 'GET'
-        }
-        fetch('https://cnodejs.org/api/v1/topics', {
-            qs: {
-                page: 1,
-                tab: 'all',
-                limit: 20
-            }
-        }).then((response) => response.json()).then((data) => {
-            this.setState({
-                news: data['data']
-            })
-            // console.log(data['data'])
-            console.log('data', data);
-        })
     }
     strToTop(isGood, isTop, tab) {
         if (isGood || isTop) {
@@ -66,6 +50,8 @@ class PageList extends React.Component {
     }
     onChange(pageNumber) {
         console.log(pageNumber)
+        this.props.dispatch(fetchPostsIfNeeded(this.props.menu,pageNumber,30))
+        
     }
     render() {
             const container = ( <
@@ -75,15 +61,15 @@ class PageList extends React.Component {
                 >
             );
             const {
-                posts
+                items
             } = this.props
-            console.log('posts1111', posts)
+            console.log('posts1111', items)
             const {
                 news
             } = this.state;
-            const pageList = posts.length ?
-                posts.map((itm, index) => ( 
-                    <div >
+            const pageList = items.length ?
+                items.map((itm, index) => ( 
+                    <div key={index}>
                         <Row style = {
                             index == 0 ? {
                                 marginBottom: '10px'
@@ -116,9 +102,7 @@ class PageList extends React.Component {
                         } 
                         </span> 
                         </Col >
-                         <Col span = {
-                            19
-                        } >
+                         <Col span = {17} >
                         <div className = "topic_title_wrapper" >
                         <span className = {
                             itm.top ? 'put_top' : itm.good ? 'put_good' : 'topiclist-tab'
@@ -138,22 +122,16 @@ class PageList extends React.Component {
                     </div> 
                     </Col > 
                     <Col span = {2} >
-                    <Link to = {
-                        `/user/${itm.author.loginname}`
-                    }
-                    className = "user_small_avatar" >
-                    <img src = {
-                        itm.author.avatar_url
-                    }
-                    title = {
-                        itm.author.loginname
-                    }
-                    /> </Link > &
-                    nbsp; & nbsp; {
-                        transformDate(itm.last_reply_at)
-                    }
+                        <Link to = {
+                            `/user/${itm.author.loginname}`
+                        } className = "user_small_avatar" >
+                            <img src = {itm.author.avatar_url} title = 
+                            {itm.author.loginname}/> 
+                        </Link > &nbsp;&nbsp; 
+                        {transformDate(itm.last_reply_at)}
 
-                    </Col> </Row >
+                    </Col> 
+                    </Row >
                     </div>
                 )):
         ''
@@ -163,7 +141,7 @@ class PageList extends React.Component {
         <Card bordered = {
             false
         } >
-        <Spin spinning = {!posts.length > 0
+        <Spin spinning = {!items.length > 0
         }
         size = "large"
         delay = {
@@ -179,7 +157,7 @@ class PageList extends React.Component {
             100
         }
         onChange = {
-            this.onChange
+            this.onChange.bind(this)
         }
         /> </Card > </div>
     )
@@ -188,20 +166,15 @@ class PageList extends React.Component {
 
 const mapStateToProps = state => {
     const {
-        selectedSubreddit,
-        postsBySubreddit
-    } = state
-    console.log('postsssssss', postsBySubreddit)
-    // const {
-    //   posts: post
-    // } = postsBySubreddit['post'] || {
-    //   isFetching: true,
-    //   items: []
-    // }
-    // console.log('posts1111111',posts)
-    const posts = postsBySubreddit['post'] || []
+        article_list,tab
+    }=state
+    console.log('111',tab)
+    let menu=state['tab']['tab']
+    const {items,isFetching} = article_list || []
     return {
-        posts
+        items,
+        isFetching,
+        menu
     }
 }
 

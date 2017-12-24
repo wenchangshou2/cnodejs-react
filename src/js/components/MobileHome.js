@@ -1,6 +1,6 @@
 import React from 'react';
 // import MobileHeader from './MobileHeader';
-import {Tabs,BackTop,Affix} from 'antd';
+import {Tabs,Icon,BackTop,Affix} from 'antd';
 const TabPane = Tabs.TabPane;
 import MobileList from './MobileList';
 class MobileHome extends React.Component{
@@ -25,9 +25,13 @@ class MobileHome extends React.Component{
                         <MobileList type="job"/>
                     </TabPane>
                 </Tabs>
-                <BackTop >
-                    <div className="ant-back-top-inner">UP</div>
-                </BackTop>
+                <div id="custom-back-top">
+                    <BackTop >
+                        {/* <div className="ant-back-top-inner">UP</div> */}
+                        <Icon type="to-top" className="ant-back-top-inner" />
+
+                    </BackTop>
+                </div>
 
             </div>
         )

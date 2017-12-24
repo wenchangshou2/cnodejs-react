@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { fetchPostsIfNeeded } from '../actions/index';
+import { fetchPostsIfNeeded,setTab } from '../actions/index';
 // import {changeTag} from '../actions';
 class  listHeader extends React.Component{
     componentDidMount() {
-        // this.props.dispatch(fetchPostsIfNeeded('job'))
+        // this.props.dispatch(fetchPostsIfNeeded('all'))
     }
     componentDidMount(){
         const {dispatch,selectedSubreddit}=this.props;
@@ -12,11 +12,13 @@ class  listHeader extends React.Component{
     }
     handleChange = tab => {
         console.log('chhange',tab)
-        this.props.dispatch(fetchPostsIfNeeded(tab))
+        this.props.dispatch(fetchPostsIfNeeded(tab,1,30))
+        this.props.dispatch(setTab(tab))
       }
     render(){
         const {selectedSubreddit,posts,isFetching,lastUpdated} = this.props
-        this.props.dispatch(fetchPostsIfNeeded('all'))
+        this.props.dispatch(fetchPostsIfNeeded('all',1,30))
+        this.props.dispatch(setTab('all'))
         return (
             <div className="panel_header">
                 <a href="#" onClick={this.handleChange.bind(this,'all')} className="topic-tab">全部</a>

@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 import transformDate from '../../utils/transformDate';
 // import ReactPullToRefresh from 'react-pull-to-refresh';
 import PropTypes from 'prop-types';
-import {lazyload} from 'react-lazyload';
 import InfiniteScroll from 'react-infinite-scroller';
 import {connect} from 'react-redux';
 import { fetchPostsIfNeeded } from '../actions/index';
@@ -15,20 +14,16 @@ class MobileList extends React.Component{
     constructor(){
         super();
         this.state={
-            news:'',
-            page:2,
+            news:[],
+            page:1,
             isMore:true,
             loading: true,
             hasMore: true,
             fetching:false,
+            articles:[]
         };
-        // this.loadMore=this.debounce(this.loadMore,600)
-    }
-    handleScroll(e,force){
-        console.log(e,force)
     }
     componentDidMount()  {
-        // setInterval(handleScroll,100)
         setTimeout(() => {
             this.setState({loading:false})
         }, 3000);
@@ -37,48 +32,18 @@ class MobileList extends React.Component{
         var myFetchOptions={
             method:'GET'
         };
-        // this.props.dispatch(fetchPostsIfNeeded(this.props.type,this.state.page))
-        // fetch(`https://cnodejs.org/api/v1/topics?tab=${this.props.type}`).then(response=>response.json()).then(json=>{
-        //     this.setState({
-        //         news:json['data']
-        //     })
-        // })
     }
     loadMore(){
-        const {fetching,page} = this.state
-        console.log('lore moad')
-        // let {page}=this.state;
-        // console.log(page)
-        // this.setState({page:page+1})
-        this.setState({
-            hasMore: false,
-        });
-        if(this.state.hasMore)
+        const {page} = this.state
+        const {isFetching}=this.props
+        if(!isFetching)
         {
-            // fetch(`https://cnodejs.org/api/v1/topics?tab=${this.props.type}&page=${this.state.page}`).then(response=>response.json()).then(json=>{
-            //     this.setState({
-            //         news:json['data'],
-            //         hasMore:false
-            //     })
-            // })
-            // this.props.dispatch(fetchPostsIfNeeded(this.props.type,page,this.state.page))
+            this.setState({
+                page:page+1
+            })
+            this.props.dispatch(fetchPostsIfNeeded(this.props.type,page))
 
         }
-        this.props.dispatch(fetchPostsIfNeeded(this.props.type,this.state.page))
-        // this.setState({
-        //     // hasMore:true,
-        //     page:page+1
-        // })
-
-        //   if(!fetching){
-        //       this.setState({
-        //           fetching:true
-        //       })
-
-        //   }
-        this.setState({
-            loading: false
-          });
 
     }
     debounce(func, delay) {
@@ -109,17 +74,18 @@ class MobileList extends React.Component{
     isGood=(good)=> good?<span style={{color:'red'}}>&nbsp;&nbsp;精</span>:''
     render(){
         const {news} = this.state;
-        const {isMore,loading,hasMoreItems} =this.state
-        const {posts}=this.props
-        console.log(posts)
-        const newsList = posts.length
-        ? posts.map((newsItem,index)=>(
-            <Row key={index}>
+        const {isMore,loading,hasMoreItems,hasMore} =this.state
+        const {items}=this.props
+        // let articles=[]
+        let self=this
+        items.map((newsItem,index)=>{
+            self.state.articles.push(
+            <Row key={self.state.articles.length+1}>
                 <Col span={5}>
                     <Link to={`/user/${newsItem.author.loginname}`} className="mobile_user_avatar">
-                        <lazyload height={200} >
+                        {/* <lazyload height={200} > */}
                             <img src={newsItem.author.avatar_url} title={newsItem.author.loginname} /> 
-                        </lazyload>
+                        {/* </lazyload> */}
                     </Link>
                 </Col>
                 <Col span={17}>
@@ -150,34 +116,31 @@ class MobileList extends React.Component{
                     </Link>
                 </Col>
             </Row>
-        )):'没有加载任何新闻'
+        )})
         return(
-                <div style={{height:'700px',overflow:'auto'}}>
                     <InfiniteScroll
-                        pageStart={1}
+                        pageStart={0}
                         loadMore={this.loadMore.bind(this)}
                         hasMore={this.state.hasMore}
                         loader={<div className="loader">Loading ...</div>}
-                        useWindow={false}
-                        threshold={1000}
                     >
                     <div>
-                        {newsList}
+                        {this.state.articles}
                     </div>
                     </InfiniteScroll>
-                </div>
 
         )
     }
 }
 const mapStateToProps=state=>{
     const {
-        postsBySubreddit
+        article_list
     }=state
-    console.log('fffffffffffffff',state)
-    const posts = postsBySubreddit['post'] || []
+    const {items,isFetching} = article_list || []
+    console.log('11111111111',state)
     return {
-        posts
+        items,
+        isFetching
     }
 }
 export default connect(mapStateToProps)(MobileList);

@@ -1,8 +1,8 @@
 
 import React from 'react';
 import {connect} from 'react-redux'
-import { Affix, Row, Col ,Icon} from 'antd';
-import {getArticlePost} from '../actions/index'
+import { Affix, Row, Col ,Icon,Avatar} from 'antd';
+import {get_article} from '../actions/index'
 let ReactMarkdown = require('react-markdown');
 import {Link} from 'react-router-dom';
 
@@ -17,9 +17,8 @@ class MobileTopic extends React.Component {
             topic:''
         }
     }
-    componentDidMount(){
-        console.log(this.props)
-        this.props.dispatch(getArticlePost(this.props.match.params.id))
+    componentWillMount(){
+        this.props.dispatch(get_article(this.props.match.params.id))
     }
     strToTop(isGood, isTop, tab) {
         if(isGood||isTop){
@@ -69,32 +68,44 @@ class MobileTopic extends React.Component {
         return (
             <div>
                 <Affix >
-                    <Row type="flex" style={{height:'40px',backgroundColor:'rgb(0, 188, 212)'}} >
-                        <Col span={6}>
+                <Row style={{backgroundColor:'rgb(0, 188, 212)',height:'50px'}}  className="mobileTopicHeader">
+                        <Col span={6} className="mobileTopicTitle" >
                             <Link to="/">
-                                <Icon type="rollback" className="mobileIcon" style={{fontSize:'30px'}}/>
+                                <Icon type="rollback"   style={{color:'white',fontSize2:'20px'}}/>
                             </Link>
                         </Col>
-                        <Col span={12}>
+                        <Col span={12} className="mobileTopicTitle">
                             文章详情
                         </Col>
                         <Col span={6}>
                         </Col>
                     </Row>
                 </Affix>
-                <div className="mobile_article_title">
-                    <span className="mobile_article_tab">{this.strToTop(topic.tab)}</span>
-                    {topic.title}
+                <div className="mobile_article_author">
+                    <Row>
+                        <Col span={4}>
+                            <img src={topic.author.avatar_url} />
+                        </Col>
+                        <Col span={13}>
+                            <Link to={`/user/${topic.author.loginname}`}>
+                                {topic.author.loginname}
+                            </Link>
+                        </Col>
+                        <Col span={7}>
+                            <p>发表于{transformDate(topic.create_at)}</p>
+                            <p>
+                                <Icon type="message" />{topic.replies.length}&nbsp;&nbsp;
+                                <Icon type="eye" />{topic.visit_count}
+                            </p>
+                        </Col>
+                    </Row>
                 </div>
-                <div className="mobile_article_extra">
-                    <span className="mobile_article_create_at">{transformDate(topic.create_at)}</span>
-                    <span>作者:{topic['author']==undefined?"":topic["author"]['loginname']}</span>
-                    <span>{topic.visit_count}次浏览</span>
+                <div>
+                    <h1 style={{textAlign:'center',padding:'5px'}}>{topic.title}</h1>
                 </div>
-                <hr/>
                 <div className="mobile_article_content">
                     {/* <ReactMarkdown source={topic.content} mode="skip"/> */}
-                    <div class="markdown-body" dangerouslySetInnerHTML={{__html:topic.content}}>
+                    <div className="markdown-body" dangerouslySetInnerHTML={{__html:topic.content}}>
                         {/* {topic.content} */}
                     </div>
                 </div>
@@ -109,9 +120,9 @@ class MobileTopic extends React.Component {
     }
 }
 const mapStateToProps=state=>{
-    const {postTopic} =state
-    const topic=postTopic['topic']||[]
-    console.log('ffffffff',topic)
+    const {article} =state
+    console.log('111',state)
+    const {topic}=article
     return {
        topic 
     }
