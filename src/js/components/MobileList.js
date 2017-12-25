@@ -10,6 +10,7 @@ import { fetchPostsIfNeeded } from '../actions/index';
 
 
 
+
 class MobileList extends React.Component{
     constructor(){
         super();

@@ -73,6 +73,14 @@
       background-color: red;
 
   }
+  .mobile_user_topic_collect_title{
+      margin-left: 5px;
+      width:80%;
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+  }
   .mobileTopicTitle{
       font-size: 20px;
       color:white;
@@ -93,6 +101,11 @@
     max-width: 980px;
     margin: 0 auto;
     padding: 45px;
+}
+.mobile_user_topic_collect_icon{
+    width:30px;
+    height:30px;
+    border-radius: 30px;
 }
 
 @media (max-width: 767px) {

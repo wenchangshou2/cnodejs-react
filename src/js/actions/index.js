@@ -1,13 +1,14 @@
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'
-export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT'
-export const REQUEST_ARTICLE_LIST ='REQUEST_ARTICLE_LIST'
-export const RECEIVE_ARTICLE_LIST="RECEIVE_ARTICLE_LIST"
-export const REQUEST_ARTICLE ='REQUEST_ARTICLE'
-export const RECEIVE_ARTICLE="RECEIVE_ARTICLE"
-export const SET_TAB="SET_TAB"
-export const RECEIVE_USER="RECEIVE_USER"
+export const REQUEST_POSTS = 'REQUEST_POSTS';
+export const RECEIVE_POSTS = 'RECEIVE_POSTS';
+export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT';
+export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT';
+export const REQUEST_ARTICLE_LIST ='REQUEST_ARTICLE_LIST';
+export const RECEIVE_ARTICLE_LIST='RECEIVE_ARTICLE_LIST';
+export const REQUEST_ARTICLE ='REQUEST_ARTICLE';
+export const RECEIVE_ARTICLE='RECEIVE_ARTICLE';
+export const SET_TAB='SET_TAB';
+export const RECEIVE_USER='RECEIVE_USER';
+export const RECEIVE_USER_TOPIC_COLLECT='RECEIVE_USER_TOPIC_COLLECT';
 export const selectSubreddit = subreddit => ({type: SELECT_SUBREDDIT, subreddit})
 
 export const invalidateSubreddit = subreddit => ({type: INVALIDATE_SUBREDDIT, subreddit})
@@ -22,6 +23,11 @@ export const receive_article_list = (subreddit, json) => ({
 export const receive_user=(json)=>({
     type:RECEIVE_USER,
     user:json,
+    receivedAt:Date.now()
+})
+export const receive_user_topic_collect=(json)=>({
+    type:RECEIVE_USER_TOPIC_COLLECT,
+    user_topic_collect:json,
     receivedAt:Date.now()
 })
 export const receive_article=(json)=>({
@@ -56,6 +62,14 @@ export const get_user=(userId)=>dispatch=>{
         dispatch(receive_user(json['data']))
     })
 }
+export const get_user_topic_collect=(userId)=>dispatch=>{
+    fetch(`https://cnodejs.org/api/v1/topic_collect/${userId}`)
+    .then((response) => response.json())
+    .then((json) => {
+        dispatch(receive_user_topic_collect(json['data']))
+    })
+}
+
 export const get_article=(topicId,mdrender=true)=>dispatch=>{
     return fetch(`https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${mdrender}`)
     .then(response=>response.json())
@@ -65,14 +79,6 @@ export const get_article=(topicId,mdrender=true)=>dispatch=>{
     })
 }
 
-// export const getArticlePost=(topicId,mdrender=true)=>dispatch=>{
-//     return fetch(`https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${mdrender}`)
-//     .then(response=>response.json())
-//     .then(json=>{
-//         console.log(json)
-//         dispatch(receiveTopic(json['data']))
-//     })
-// }
 
 const shouldFetchPosts = (state, subreddit) => {
     const posts = state.article_list['posts']

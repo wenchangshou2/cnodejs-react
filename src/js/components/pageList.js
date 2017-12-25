@@ -23,7 +23,10 @@ class PageList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            news: ''
+            news: '',
+            lastTab:'all',
+            currPage:1,
+            loading:false
         }
     }
     strToTop(isGood, isTop, tab) {
@@ -50,7 +53,9 @@ class PageList extends React.Component {
     }
     onChange(pageNumber) {
         console.log(pageNumber)
+        this.setState({loading:true})
         this.props.dispatch(fetchPostsIfNeeded(this.props.menu,pageNumber,30))
+        this.setState({currPage:pageNumber,loading:false})
         
     }
     render() {
@@ -61,12 +66,14 @@ class PageList extends React.Component {
                 >
             );
             const {
-                items
+                items,menu
             } = this.props
-            console.log('posts1111', items)
             const {
-                news
+                news,lastTab,currPage,loading
             } = this.state;
+            if(menu!=lastTab){
+                this.setState({lastTab:menu,currPage:1})
+            }
             const pageList = items.length ?
                 items.map((itm, index) => ( 
                     <div key={index}>
@@ -138,17 +145,12 @@ class PageList extends React.Component {
     console.log('pagelist', pageList)
     return ( 
     <div>
-        <Card bordered = {
-            false
-        } >
-        <Spin spinning = {!items.length > 0
-        }
+        <Card bordered = {false}>
+        <Spin spinning = {loading}
         size = "large"
-        delay = {
-            100
-        } > {
-            pageList
-        } </Spin>
+        delay = {100} > 
+            {pageList} 
+        </Spin>
 
         <Pagination defaultCurrent = {
             1
@@ -159,6 +161,7 @@ class PageList extends React.Component {
         onChange = {
             this.onChange.bind(this)
         }
+        current={currPage}
         /> </Card > </div>
     )
 }

@@ -9,7 +9,8 @@ import {
   REQUEST_ARTICLE,
   RECEIVE_ARTICLE,
   SET_TAB,
-  RECEIVE_USER
+  RECEIVE_USER,
+  RECEIVE_USER_TOPIC_COLLECT
 } from '../actions'
 
 const selectedSubreddit = (state = 'job', action) => {
@@ -162,6 +163,22 @@ const user=(state={
         return state;
   }
 }
+const user_topic_collect=(state={
+  user_topic_collect:[
+
+  ],
+},action)=>{
+  switch (action.type) {
+    case RECEIVE_USER_TOPIC_COLLECT:
+      return Object.assign({}, state,
+        Object.assign({}, state, {
+          user_topic_collect: action.user_topic_collect,
+          lastUpdated: action.receivedAt
+        }))
+      default:
+        return state;
+  }
+}
 const tab=(state={
   tab:'all'
 },action)=>{
@@ -180,7 +197,7 @@ const rootReducer = combineReducers({
   // postsBySubreddit,
   article_list,
   article,
-  tab,user
+  tab,user,user_topic_collect
 })
 
 export default rootReducer

@@ -7,6 +7,7 @@ let ReactMarkdown = require('react-markdown');
 import {Link} from 'react-router-dom';
 
 import transformDate from '../../utils/transformDate';
+import MobileHeader from './MobileHeader';
 
 
 class MobileTopic extends React.Component {
@@ -64,23 +65,9 @@ class MobileTopic extends React.Component {
                 </div>
             </div>
         )):''
-        console.log('post111111',topic)
         return (
             <div>
-                <Affix >
-                <Row style={{backgroundColor:'rgb(0, 188, 212)',height:'50px'}}  className="mobileTopicHeader">
-                        <Col span={6} className="mobileTopicTitle" >
-                            <Link to="/">
-                                <Icon type="rollback"   style={{color:'white',fontSize2:'20px'}}/>
-                            </Link>
-                        </Col>
-                        <Col span={12} className="mobileTopicTitle">
-                            文章详情
-                        </Col>
-                        <Col span={6}>
-                        </Col>
-                    </Row>
-                </Affix>
+                <MobileHeader/>
                 <div className="mobile_article_author">
                     <Row>
                         <Col span={4}>
