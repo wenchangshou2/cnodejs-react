@@ -76,7 +76,7 @@ class PageList extends React.Component {
             }
             const pageList = items.length ?
                 items.map((itm, index) => ( 
-                    <div key={index}>
+                    <div key={index} className="pcTopicList">
                         <Row style = {
                             index == 0 ? {
                                 marginBottom: '10px'
@@ -152,9 +152,7 @@ class PageList extends React.Component {
             {pageList} 
         </Spin>
 
-        <Pagination defaultCurrent = {
-            1
-        }
+        <Pagination defaultCurrent = {1}
         total = {
             100
         }

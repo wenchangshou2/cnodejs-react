@@ -59,20 +59,25 @@
       position: absolute;
       color:white;
   }
-  .mobileTopicHeader{
-      height:400px;
-      padding-top: 10px;
+  div#mobileTopicHeader{
+      background-color: #00bcd4;
+      height:50px;
+      z-index: 999;
+      box-shadow: 2px 2px 5px #333333; 
+      i{
+          font-size: 30px;
+      }
   }
-  .mobileTopicIcon{
-      display: flex;
-      display:-webkit-flex;
-      align-items: center;
-      justify-content: center;
-      height:100%;
-      width:100%;
-      background-color: red;
+//   .mobileTopicIcon{
+//       display: flex;
+//       display:-webkit-flex;
+//       align-items: center;
+//       justify-content: center;
+//       height:100%;
+//       width:100%;
+//       background-color: red;
 
-  }
+//   }
   .mobile_user_topic_collect_title{
       margin-left: 5px;
       width:80%;
@@ -106,6 +111,30 @@
     width:30px;
     height:30px;
     border-radius: 30px;
+}
+.pcTopicList :hover{
+    background-color: aliceblue;
+}
+
+div#mobileHomeHeader{
+    background-color: #00bcd4;
+    height:50px;
+    // z-index: 999;
+    box-shadow: 2px 2px 5px #333333; 
+    .title{
+        text-align: center;
+        color: white;
+        font-size: 24px;
+    }
+    .more{
+        font-size: 28px;
+        color: white;
+    }
+    img{
+        height:25px;
+        color:white;
+        
+    }
 }
 
 @media (max-width: 767px) {

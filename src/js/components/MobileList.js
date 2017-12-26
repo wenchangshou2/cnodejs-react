@@ -81,7 +81,7 @@ class MobileList extends React.Component{
         let self=this
         items.map((newsItem,index)=>{
             self.state.articles.push(
-            <Row key={self.state.articles.length+1}>
+            <Row key={self.state.articles.length+1} className="mobileTopicList">
                 <Col span={5}>
                     <Link to={`/user/${newsItem.author.loginname}`} className="mobile_user_avatar">
                         {/* <lazyload height={200} > */}
@@ -119,6 +119,7 @@ class MobileList extends React.Component{
             </Row>
         )})
         return(
+            <div>
                     <InfiniteScroll
                         pageStart={0}
                         loadMore={this.loadMore.bind(this)}
@@ -130,6 +131,7 @@ class MobileList extends React.Component{
                     </div>
                     </InfiniteScroll>
 
+            </div>
         )
     }
 }

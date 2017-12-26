@@ -1,13 +1,32 @@
 import React from 'react';
 // import MobileHeader from './MobileHeader';
-import {Tabs,Icon,BackTop,Affix} from 'antd';
+import {Tabs,Icon,BackTop,Affix,Row,Col,Badge} from 'antd';
 const TabPane = Tabs.TabPane;
 import MobileList from './MobileList';
+
 class MobileHome extends React.Component{
+    constructor(props) {
+        super(props);
+    }
     render(){
+
         return(
             <div>
-            {/* <MobileHeader/> */}
+                <Affix>
+                    <Row id="mobileHomeHeader" type="flex" align="middle" justify="space-between">
+                        <Col span={6} push={2}>
+                            <Icon type="folder-open" className="more" />
+                        </Col>
+                        <Col span={12} className="title">
+                            NodeJS论坛
+                        </Col>
+                        <Col span={6} push={3}>
+                            <Badge count={5}>
+                                <img src="/src/images/ld.svg"/>
+                            </Badge>
+                        </Col>
+                    </Row>
+                </Affix>
                 <Tabs>
                     <TabPane tab="全部" key="1">
                         <MobileList type="all"/>
@@ -29,7 +48,6 @@ class MobileHome extends React.Component{
                     <BackTop >
                         {/* <div className="ant-back-top-inner">UP</div> */}
                         <Icon type="to-top" className="ant-back-top-inner" />
-
                     </BackTop>
                 </div>
 

@@ -19,6 +19,7 @@ import MobileTopic from './components/MobileTopic';
 import MobileUser from './components/MobileUser';
 import  logger from 'redux-logger';
 import 'github-markdown-css';
+import '../css/mobile.less'
 
 
 
