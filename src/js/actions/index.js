@@ -9,6 +9,9 @@ export const RECEIVE_ARTICLE='RECEIVE_ARTICLE';
 export const SET_TAB='SET_TAB';
 export const RECEIVE_USER='RECEIVE_USER';
 export const RECEIVE_USER_TOPIC_COLLECT='RECEIVE_USER_TOPIC_COLLECT';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILED = 'LOGIN_FAILED';
+export const LOGOUT = 'LOGOUT';
 export const selectSubreddit = subreddit => ({type: SELECT_SUBREDDIT, subreddit})
 
 export const invalidateSubreddit = subreddit => ({type: INVALIDATE_SUBREDDIT, subreddit})
@@ -102,3 +105,36 @@ export function fetchPostsIfNeeded(subreddit,page=1,limit=10) {
       }
     }
   }
+
+export const fetchAccess=token=>dispatch=>{
+    let params={
+        method:'post',
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body:`accesstoken=${token}`
+    }
+    fetch(`https://cnodejs.org/api/v1/accesstoken`,params)
+     .then(response=>response.json())
+     .then((response)=>{
+         if(response.success){
+             dispatch(loginSuccess(response.loginname,response.id,token))
+             dispatch(get_user(response.loginname))
+         }else{
+             dispatch(loginFailed(response.error_msg))
+         }
+     })
+}
+const loginSuccess=(loginName,loginId,accessToken)=>({
+    type:LOGIN_SUCCESS,
+    loginName,
+    loginId,
+    accessToken
+})
+const loginFailed=failedMessage=>({
+    type:LOGIN_FAILED,
+    failedMessage
+})
+export const logout = () => ({
+    type: LOGOUT
+})

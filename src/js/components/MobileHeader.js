@@ -16,8 +16,8 @@ class MobileHeader extends React.Component {
               </Link>
             </Col>
             <Col span={12} className="mobileTopicTitle">
-              文章详情
-                        </Col>
+              {this.props.title===undefined?'文章详情':this.props.title}
+            </Col>
             <Col span={6}>
             </Col>
           </Row>

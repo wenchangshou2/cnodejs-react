@@ -10,7 +10,10 @@ import {
   RECEIVE_ARTICLE,
   SET_TAB,
   RECEIVE_USER,
-  RECEIVE_USER_TOPIC_COLLECT
+  RECEIVE_USER_TOPIC_COLLECT,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  LOGOUT
 } from '../actions'
 
 const selectedSubreddit = (state = 'job', action) => {
@@ -193,11 +196,23 @@ const tab=(state={
 
   }
 }
+const login=(state={success:false},action)=>{
+  switch(action.type){
+    case LOGIN_SUCCESS:
+      return { ...state, succeed: true, loginName: action.loginName, loginId: action.loginId, accessToken: action.accessToken }
+    case LOGIN_FAILED:
+      return { ...state, succeed: false, failedMessage: action.failedMessage }
+    case LOGOUT:
+      return { succeed: false }
+    default:
+      return state
+  }
+}
 const rootReducer = combineReducers({
   // postsBySubreddit,
   article_list,
   article,
-  tab,user,user_topic_collect
+  tab,user,user_topic_collect,login
 })
 
 export default rootReducer

@@ -1,21 +1,57 @@
 import React from 'react';
 // import MobileHeader from './MobileHeader';
-import {Tabs,Icon,BackTop,Affix,Row,Col,Badge} from 'antd';
+import {Tabs,Icon,BackTop,Affix,Row,Col,Badge,Avatar} from 'antd';
 const TabPane = Tabs.TabPane;
 import MobileList from './MobileList';
-
+import Drawer from 'react-motion-drawer';
+import {Link} from 'react-router-dom';
+const style = {
+    background: "#F9F9F9",
+    boxShadow: "rgba(0, 0, 0, 0.188235) 0px 10px 20px, rgba(0, 0, 0, 0.227451) 0px 6px 6px"
+  };
 class MobileHome extends React.Component{
     constructor(props) {
         super(props);
+        this.state={
+            width:'80%' ,
+            openLeft:false  
+        }
     }
     render(){
-
+        const drawerProps = {
+            overlayColor: "rgba(255,255,255,0.6)",
+            drawerStyle: style
+          };
+          let {openLeft} =this.state;
         return(
             <div>
+                <Drawer
+                    {...drawerProps}
+                    width={this.state.width}
+                    fadeOut={true}
+                    open={openLeft}
+                    onChange={openState => this.setState({ openLeft: openState })}
+                    className="myDrawer"
+                >
+                <div className="up">
+                    <Link to="/login">
+                    <Avatar  icon="user" className="icon" size="large" />
+                    </Link>
+                    <h3>通过头像登录</h3>
+                </div>
+                </Drawer>
+
                 <Affix>
                     <Row id="mobileHomeHeader" type="flex" align="middle" justify="space-between">
                         <Col span={6} push={2}>
-                            <Icon type="folder-open" className="more" />
+                              <a
+                              style={{ padding: 15 }}
+                              className=""
+                              onClick={() =>
+                                this.setState({ openLeft: !openLeft })}
+                            >
+                                <Icon type="folder-open" className="more" />
+                            </a>
                         </Col>
                         <Col span={12} className="title">
                             NodeJS论坛

@@ -17,6 +17,7 @@ import MediaQuery from 'react-responsive';
 import MobileHome from './components/MobileHome';
 import MobileTopic from './components/MobileTopic';
 import MobileUser from './components/MobileUser';
+import MobileLogin from './components/MobileLogin';
 import  logger from 'redux-logger';
 import 'github-markdown-css';
 import '../css/mobile.less'
@@ -57,6 +58,7 @@ export default class Root extends React.Component {
                                     <Route exact path="/" component={MobileHome}/>
                                     <Route path="/topic/:id" component={MobileTopic}/>
                                     <Route path="/user/:id" component={MobileUser}/>
+                                    <Route path="/login" component={MobileLogin}/>
                                 </div>
                             </Router>
                         </MediaQuery>
