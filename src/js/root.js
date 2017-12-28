@@ -1,67 +1,51 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/lib/button/style';
-import PCHeader from './components/PCHeader';
-import PCHome from './components/PCHome';
-import PCfooter from './components/PCFooter';
-import PCStart from './components/PCStart';
-import PCTopics from './components/PCTopics';
-import PCSignin from './components/PCSignin';
-import { createStore } from 'redux';
+
+import { createStore,applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 // import reducer from './reducers'
 import reducer from './reducers';
-import { BackTop } from 'antd';
-import MediaQuery from 'react-responsive';
-import MobileHome from './components/MobileHome';
-import MobileTopic from './components/MobileTopic';
-import MobileUser from './components/MobileUser';
-import MobileLogin from './components/MobileLogin';
+
 import  logger from 'redux-logger';
 import 'github-markdown-css';
 import '../css/mobile.less'
+import {connect} from 'react-redux';
+import App from './components/App'
 
 
 
 const middleware = [thunk,logger];
 // const store = createStore(reducer)
 const store = createStore(reducer, applyMiddleware(...middleware));
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import PCApi from './components/PCApi';
-import PCUser from './components/PCUser';
-import { applyMiddleware } from 'redux';
 export default class Root extends React.Component {
+    componentWillMount(){
+        const {dispatch}=this.props;
+        // const LoadingAction=(accesToken,loginName)=>{
+        //     console.log(dispatch)
+        //     dispatch(fetchAccess(accesToken))
+        //     dispatch(get_user(loginName))
+        // }
+        // if(window.localStorage.getItem('masterInfo')){
+        //     let masterInfo=window.localStorage.getItem('masterInfo')
+        //     masterInfo=JSON.parse(masterInfo)
+        //     const accessToken=masterInfo.accessToken;
+        //     const loginName=masterInfo.loginName;
+        //     LoadingAction(accessToken,loginName)
+        // }else{
+        //     const accessToken='6f91a397-1fe7-445f-bf29-30b5a9ab674e'
+        //     const loginName='wenchangshou2'
+        //     LoadingAction(accessToken,loginName)
+        // }
+    }
     render() {
         return (
             <div>
                 <Provider store={store}>
                     <div>
-                        <MediaQuery query="(min-device-width: 1224px)">
-                        <Router>
-                            <div>
-                                <PCHeader/>
-                                <Route exact path="/" component={PCHome}/>
-                                <Route path="/getstart" component={PCStart}/>
-                                <Route path="/api" component={PCApi}/>
-                                <Route path="/topic/:id" component={PCTopics}/>
-                                <Route path="/user/:id" component={PCUser}/>
-                                <Route path="/signin" component={PCSignin}/>
-                                <PCfooter/>
-                                <BackTop/>
-                            </div>
-                        </Router>
-                        </MediaQuery>
-                        <MediaQuery query="(max-device-width:1224px)">
-                            <Router>
-                                <div>
-                                    <Route exact path="/" component={MobileHome}/>
-                                    <Route path="/topic/:id" component={MobileTopic}/>
-                                    <Route path="/user/:id" component={MobileUser}/>
-                                    <Route path="/login" component={MobileLogin}/>
-                                </div>
-                            </Router>
-                        </MediaQuery>
+                        <App/>
+                    
                     </div>
                 </Provider>
             </div>

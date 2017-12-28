@@ -8,6 +8,7 @@ export const REQUEST_ARTICLE ='REQUEST_ARTICLE';
 export const RECEIVE_ARTICLE='RECEIVE_ARTICLE';
 export const SET_TAB='SET_TAB';
 export const RECEIVE_USER='RECEIVE_USER';
+export const REQUEST_USER='REQUEST_USER';
 export const RECEIVE_USER_TOPIC_COLLECT='RECEIVE_USER_TOPIC_COLLECT';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
@@ -22,6 +23,10 @@ export const receive_article_list = (subreddit, json) => ({
     type: RECEIVE_ARTICLE_LIST,
     posts: json,
     receivedAt: Date.now()
+})
+const request_user=loginname=>({
+    type:REQUEST_USER,
+    loginname
 })
 export const receive_user=(json)=>({
     type:RECEIVE_USER,
@@ -61,6 +66,7 @@ function getArticleList(subreddit,page=1,limit=10,mdrender=false)  {
     }
 }
 export const get_user=(userId)=>dispatch=>{
+    dispatch(request_user(userId))
     fetch(`https://cnodejs.org/api/v1/user/${userId}`).then((response)=>response.json()).then((json)=>{
         dispatch(receive_user(json['data']))
     })
@@ -119,7 +125,6 @@ export const fetchAccess=token=>dispatch=>{
      .then((response)=>{
          if(response.success){
              dispatch(loginSuccess(response.loginname,response.id,token))
-             dispatch(get_user(response.loginname))
          }else{
              dispatch(loginFailed(response.error_msg))
          }

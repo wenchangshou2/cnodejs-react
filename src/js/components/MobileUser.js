@@ -14,17 +14,12 @@ class MobileUser extends React.Component{
         console.log('ff')
     }
     componentWillMount(){
-        let user=this.props.match.params.id
-        // fetch(`https://cnodejs.org/api/v1/user/${user}`).then((response)=>response.json()).then((json)=>{
-        //     console.log('json',json)
-        // })
-        this.props.dispatch(get_user(user))
-        this.props.dispatch(get_user_topic_collect(user))
     }
     render(){
         console.log('user',this.props.user)
         const {user,user_topic_collect}=this.props
         let user_topic_collect_list=user_topic_collect.map((item,index)=>{
+            console.log('item',item)
             return(
                 <div key={index}>
                     <div className="user_topic_collect">
@@ -89,7 +84,7 @@ const mapStateToProps=state=>{
 
     console.log('11',user_topic_collect['user_topic_collect'])
     return {
-        user:user['user'],
+        user,
         user_topic_collect:user_topic_collect['user_topic_collect']
     }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 // import MobileHeader from './MobileHeader';
+import {connect} from 'react-redux';
 import {Tabs,Icon,BackTop,Affix,Row,Col,Badge,Avatar} from 'antd';
 const TabPane = Tabs.TabPane;
 import MobileList from './MobileList';
@@ -17,12 +18,18 @@ class MobileHome extends React.Component{
             openLeft:false  
         }
     }
+
     render(){
+        console.log('222',this.props)
+        let {login,user} = this.props
+        const {succeed} = login
+
         const drawerProps = {
             overlayColor: "rgba(255,255,255,0.6)",
             drawerStyle: style
           };
           let {openLeft} =this.state;
+
         return(
             <div>
                 <Drawer
@@ -33,12 +40,17 @@ class MobileHome extends React.Component{
                     onChange={openState => this.setState({ openLeft: openState })}
                     className="myDrawer"
                 >
-                <div className="up">
-                    <Link to="/login">
-                    <Avatar  icon="user" className="icon" size="large" />
-                    </Link>
-                    <h3>通过头像登录</h3>
-                </div>
+                    {succeed&&
+                    <div>
+                        <h1>登录成功</h1>
+                    </div>
+                    }
+                    {!succeed&&<div className="up">
+                        <Link to="/login">
+                            <Avatar icon="user" className="icon" size="large" />
+                        </Link>
+                        <h3>通过头像登录</h3>
+                    </div>}
                 </Drawer>
 
                 <Affix>
@@ -91,4 +103,12 @@ class MobileHome extends React.Component{
         )
     }
 }
-export default MobileHome;
+const mapStateToProps=state=>{
+    const {
+        user,login
+    }=state
+    return {
+        user,login
+    }
+}
+export default connect(mapStateToProps)(MobileHome)
