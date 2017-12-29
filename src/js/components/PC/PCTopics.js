@@ -3,7 +3,7 @@ import React from "react";
 import { Card, Avatar, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 let ReactMarkdown = require('react-markdown');
-import transformDate from '../../utils/transformDate';
+import transformDate from '../../../utils/transformDate';
 
 // import App from './App'
 export default class PCTopics extends React.Component {

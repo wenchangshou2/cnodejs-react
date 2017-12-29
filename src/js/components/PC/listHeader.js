@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { fetchPostsIfNeeded,setTab } from '../actions/index';
+import { fetchPostsIfNeeded,setTab } from '../../actions/index';
 // import {changeTag} from '../actions';
 class  listHeader extends React.Component{
     componentDidMount() {

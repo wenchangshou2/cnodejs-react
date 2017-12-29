@@ -4,7 +4,7 @@ import {Row, Col, Card, Button,Avatar} from 'antd';
 import ListHeader from './listHeader';
 import PageList from './pageList';
 import {Link} from 'react-router-dom';
-import transformDate from '../../utils/transformDate';
+import transformDate from '../../../utils/transformDate';
 
 // import App from './App'
 export default class PCUser extends React.Component {

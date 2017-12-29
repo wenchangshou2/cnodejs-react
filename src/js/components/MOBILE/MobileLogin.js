@@ -1,9 +1,9 @@
 import React from 'react';
 import MobileHeader from './MobileHeader'
 import {Input,Switch,Button} from 'antd'
-import { fetchAccess,getUser, get_user } from '../actions/index';
+import { fetchAccess, getUser, get_user } from '../../actions/index';
 import {connect} from 'react-redux';
-class MobileLogin extends React.Component{
+class MobileLogin extends React.Component {
     constructor(props){
         super(props)
         this.state={

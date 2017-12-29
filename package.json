@@ -26,6 +26,7 @@
     "react-iscroll": "^2.0.3",
     "react-lazyload": "^2.3.0",
     "react-markdown": "^3.1.1",
+    "react-motion-drawer": "^2.1.7",
     "react-pull-to-refresh": "^1.1.1",
     "react-redux": "^5.0.6",
     "react-remarkable": "^1.1.3",

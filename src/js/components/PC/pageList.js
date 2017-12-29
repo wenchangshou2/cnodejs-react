@@ -9,8 +9,8 @@ import {
     Spin,
     Alert
 } from 'antd';
-import transformDate from '../../utils/transformDate';
-import { fetchPostsIfNeeded } from '../actions/index';
+import transformDate from '../../../utils/transformDate';
+import { fetchPostsIfNeeded } from '../../actions/index';
 
 import {
     Link

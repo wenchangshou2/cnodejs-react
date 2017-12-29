@@ -1,24 +1,22 @@
 import React from 'react';
-import MediaQuery from 'react-responsive';
-import PCHeader from './PCHeader';
-import PCHome from './PCHome';
-import PCfooter from './PCFooter';
-import PCStart from './PCStart';
-import PCTopics from './PCTopics';
-import PCSignin from './PCSignin';
-import PCApi from './PCApi';
-import PCUser from './PCUser';
-import MobileHome from './MobileHome';
-import MobileTopic from './MobileTopic';
-import MobileUser from './MobileUser';
-import MobileLogin from './MobileLogin';
+import { connect } from 'react-redux';
 import { BackTop } from 'antd';
-import {connect} from 'react-redux';
-import {fetchAccess,get_user} from '../actions'
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import MediaQuery from 'react-responsive';
+import PCHeader from './PC/PCHeader';
+import PCHome from './PC/PCHome';
+import PCfooter from './PC/PCFooter';
+import PCStart from './PC/PCStart';
+import PCTopics from './PC/PCTopics';
+import PCSignin from './PC/PCSignin';
+import PCApi from './PC/PCApi';
+import PCUser from './PC/PCUser';
+import MobileHome from './MOBILE/MobileHome';
+import MobileTopic from './MOBILE/MobileTopic';
+import MobileUser from './MOBILE/MobileUser';
+import MobileLogin from './MOBILE/MobileLogin';
+import { fetchAccess } from '../actions';
 
-
-
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 
 class App extends React.Component{
