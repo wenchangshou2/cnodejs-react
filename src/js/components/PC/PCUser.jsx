@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { Row, Col, Card, Button, Avatar } from 'antd';
-import ListHeader from './listHeader';
-import PageList from './pageList';
 import { Link } from 'react-router-dom';
 import transformDate from '../../../utils/transformDate';
 // import App from './App'
@@ -11,7 +9,6 @@ export default class PCUser extends React.Component {
     super(props);
     this.state = {
       userinfo: '',
-      username: '',
     };
   }
   componentWillMount() {
@@ -58,65 +55,68 @@ export default class PCUser extends React.Component {
                 <div className="user_big_avatar">
                   <Avatar src={userinfo.avatar_url} className="user_avatar" />
                 </div>
-                <a className="dark">{userinfo['loginname']/a>
+                <a className="dark" href="/#">
+                  {userinfo.loginname}
+                </a>
                 <div clsas="user_profile">
                   <ul className="Unstyled">
-                <span className="big">{userinfo['score']}</span>积分
-                  <li>
-                    <Link to={`/user/${userinfo['loginname']}/collections`}>
-                      <span className="big collect-topic-count">{userinfo['score']}</span>个话题收藏
-                    </Link>
-                                        </li>
-                                        <li>
-                                            <i className="fa fa-lg fa-fw fa-github"></i>
-                                            <a className="dark" href="#" target="_blank">
-                                                {`@${userinfo.loginname}`}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <p className="col_fade">注册时间 {transformDate(userinfo.create_at)}</p>
-                            </div>
-                        </Card>
-                        <Card title="最近创建的话题" className="mtp10">
-                            {recentTopics}
-                        </Card>
-                    </Col>
-                    <Col
-                        span={5}
-                        style={{
-                            marginLeft: '20px'
-                        }}>
-                        <Card title="友情社区" className="mtp10">
-                            <ol className="friendship-community">
-                                <li>
-                                    <a href="https://ruby-china.org/">
-                                        <img src="/src/images/ruby-china-20150529.png" />
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="http://golangtc.com/">
-                                        <img src="/src/images/golangtc-logo.png" />
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="http://phphub.org/">
-                                        <img src="/src/images/phphub-logo.png" />
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="http://testerhome.com/">
-                                        <img src="/src/images/last-image.png" />
-                                    </a>
-                                </li>
-                            </ol>
-                        </Card>
-                        <Card title="客户端二维码" className="mtp10 cnode-app-download">
-                            <img src="/src/images/matrixCode.png" />
-                        </Card>
-                    </Col>
-                </Row>
-            </div>
-        )
-    }
+                    <span className="big">{userinfo.score}</span>积分
+                    <li>
+                      <Link to={`/user/${userinfo['loginname']}/collections`}>
+                        <span className="big collect-topic-count">{userinfo['score']}</span>个话题收藏
+                      </Link>
+                    </li>
+                    <li>
+                      <i className="fa fa-lg fa-fw fa-github" />
+                      <a className="dark" href="/#" target="_blank">
+                        {`@${userinfo.loginname}`}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <p className="col_fade">注册时间 {transformDate(userinfo.create_at)}</p>
+              </div>
+            </Card>
+            <Card title="最近创建的话题" className="mtp10">
+              {recentTopics}
+            </Card>
+          </Col>
+          <Col
+            span={5}
+            style={{
+            marginLeft: '20px',
+          }}
+          >
+            <Card title="友情社区" className="mtp10">
+              <ol className="friendship-community">
+                <li>
+                  <a href="https://ruby-china.org/">
+                    <img src="/src/images/ruby-china-20150529.png" alt="ruby-china" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://golangtc.com/">
+                    <img src="/src/images/golangtc-logo.png" alt="golangtc" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://phphub.org/">
+                    <img src="/src/images/phphub-logo.png" alt="phphub" />
+                  </a>
+                </li>
+                <li>
+                  <a href="http://testerhome.com/">
+                    <img src="/src/images/last-image.png" alt="testerhome" />
+                  </a>
+                </li>
+              </ol>
+            </Card>
+            <Card title="客户端二维码" className="mtp10 cnode-app-download">
+              <img src="/src/images/matrixCode.png" alt="matrixCode" />
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    );
+  }
 }

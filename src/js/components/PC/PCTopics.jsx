@@ -152,12 +152,12 @@ export default class PCTopics extends React.Component {
                     }}>
                         <Card title="作者">
                             <div>
-                                <Link className="user_avatar" to={author_name}>
+                                <Link className="user_avatar" to={authorName}>
                                     {/* <img src={news.author.avatar_url} title={author_name}/> */}
                                     <Avatar src={news.author.avatar_url}/>
                                 </Link>
                                 <span className="user_name">
-                                    <Link className="dark" to={`/user/${author_name}`}>{author_name}</Link>
+                                    <Link className="dark" to={`/user/${authorName}`}>{authorName}</Link>
                                 </span>
                                 <div className="board clearfix">
                                     <div className="floor">
