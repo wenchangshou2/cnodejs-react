@@ -46,13 +46,10 @@ class PageList extends React.Component {
     }
     lastReplyTime(date) {
         let time = Date.parse(new Date(date))
-        console.log('time', time);
         let now = new Date()
         let timeDiff = (now - time) / 1000
-        console.log(timeDiff)
     }
     onChange(pageNumber) {
-        console.log(pageNumber)
         this.setState({loading:true})
         this.props.dispatch(fetchPostsIfNeeded(this.props.menu,pageNumber,30))
         this.setState({currPage:pageNumber,loading:false})
@@ -142,7 +139,6 @@ class PageList extends React.Component {
                     </div>
                 )):
         ''
-    console.log('pagelist', pageList)
     return ( 
     <div>
         <Card bordered = {false}>
@@ -167,11 +163,10 @@ class PageList extends React.Component {
 
 const mapStateToProps = state => {
     const {
-        article_list,tab
+        articleList,tab
     }=state
-    console.log('111',tab)
     let menu=state['tab']['tab']
-    const {items,isFetching} = article_list || []
+    const {items,isFetching} = articleList || []
     return {
         items,
         isFetching,

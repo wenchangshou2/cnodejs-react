@@ -11,7 +11,6 @@ class  listHeader extends React.Component{
         // dispatch(fetchPostsIfNeeded('share'))
     }
     handleChange = tab => {
-        console.log('chhange',tab)
         this.props.dispatch(fetchPostsIfNeeded(tab,1,30))
         this.props.dispatch(setTab(tab))
       }

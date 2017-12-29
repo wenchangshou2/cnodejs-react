@@ -13,6 +13,7 @@ export const RECEIVE_USER_TOPIC_COLLECT='RECEIVE_USER_TOPIC_COLLECT';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const LOGOUT = 'LOGOUT';
+export const FETCH_MESSAGE = 'FETCH_MESSAGE';
 export const selectSubreddit = subreddit => ({type: SELECT_SUBREDDIT, subreddit})
 
 export const invalidateSubreddit = subreddit => ({type: INVALIDATE_SUBREDDIT, subreddit})
@@ -44,7 +45,6 @@ export const receive_article=(json)=>({
     receivedAt:Date.now()
 })
 export const setTab=(tab='all')=>{
-    console.log('tab',tab)
     return{
         type:SET_TAB,
         tab:tab
@@ -52,16 +52,13 @@ export const setTab=(tab='all')=>{
 }
 
 function getArticleList(subreddit,page=1,limit=10,mdrender=false)  {
-    console.log('fetchPosts', `https://cnodejs.org/api/v1/topics?tab=${subreddit}`);
     // dispatch(requestPosts(subreddit))
     return dispatch =>{
         dispatch(request_article_list(subreddit))
         return fetch(`https://cnodejs.org/api/v1/topics?tab=${subreddit}&page=${page}&limit=${limit}&mdrender=${mdrender}`)
             .then(response => response.json())
             .then(json => {
-                console.log('json',json)
                 dispatch(receive_article_list(subreddit, json['data']))
-                console.log('ll', json['data'])
             })
     }
 }
@@ -79,67 +76,79 @@ export const getUser_topic_collect=(userId)=>dispatch=>{
     })
 }
 
-export const get_article=(topicId,mdrender=true)=>dispatch=>{
-    return fetch(`https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${mdrender}`)
-    .then(response=>response.json())
-    .then(json=>{
-        console.log(json)
-        dispatch(receive_article(json['data']))
-    })
+export const get_article = (topicId, mdrender = true) => (dispatch) => {
+  return fetch(`https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${mdrender}`)
+    .then(response => response.json())
+    .then(json => {
+      dispatch(receive_article(json['data']));
+    });
 }
-
 
 const shouldFetchPosts = (state, subreddit) => {
-    const posts = state.article_list['posts']
-    if (!posts) {
-        console.log('111111111')
-        return true
-    }
-    if (posts.isFetching) {
-        console.log('222222')
-        return false
-    }
-    return posts.didInvalidate
-}
-
-export function fetchPostsIfNeeded(subreddit,page=1,limit=10) {
-    return (dispatch, getState) => {
-        console.log('1122')
-      if (shouldFetchPosts(getState(), subreddit)) {
-          console.log('2233')
-        return dispatch(getArticleList(subreddit,page,limit))
-      }
-    }
+  const posts = state.articleList['posts'];
+  if (!posts) {
+    return true;
   }
+  if (posts.isFetching) {
+    return false;
+  }
+  return posts.didInvalidate;
+};
 
-export const fetchAccess=token=>dispatch=>{
-    let params={
-        method:'post',
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body:`accesstoken=${token}`
+export function fetchPostsIfNeeded(subreddit, page = 1, limit = 10) {
+  return (dispatch, getState) => {
+    if (shouldFetchPosts(getState(), subreddit)) {
+      return dispatch(getArticleList(subreddit, page, limit));
     }
-    fetch(`https://cnodejs.org/api/v1/accesstoken`,params)
-     .then(response=>response.json())
-     .then((response)=>{
-         if(response.success){
-             dispatch(loginSuccess(response.loginname,response.id,token))
-         }else{
-             dispatch(loginFailed(response.error_msg))
-         }
-     })
+  };
 }
-const loginSuccess=(loginName,loginId,accessToken)=>({
-    type:LOGIN_SUCCESS,
-    loginName,
-    loginId,
-    accessToken
-})
-const loginFailed=failedMessage=>({
-    type:LOGIN_FAILED,
-    failedMessage
-})
+
+export const fetchAccess = token => (dispatch) => {
+  const params = {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `accesstoken=${token}`
+  };
+  fetch(`https://cnodejs.org/api/v1/accesstoken`, params)
+    .then(response => response.json())
+    .then((response) => {
+      if (response.success) {
+        dispatch(loginSuccess(response.loginname, response.id, token));
+      } else {
+        dispatch(loginFailed(response.error_msg));
+      }
+    });
+};
+/**
+ * 获取已读和未读消息
+ * @param {any} accessToken tokken
+ * @returns 返回dispatch
+ */
+const fetchMessage = (accessToken) => {
+  return (dispatch) => {
+    fetch(`https://cnodejs.org/api/v1/messages`)
+      .then(response => response.json())
+      .then((json) => {
+        dispatch({
+          type: FETCH_MESSAGE,
+          hasReadMessage: json.data.has_read_messages,
+          hasNotReadMessage: json.data.hasnot_read_messages,
+        });
+      });
+  };
+};
+const loginSuccess = (loginName, loginId, accessToken) => ({
+  type: LOGIN_SUCCESS,
+  loginName,
+  loginId,
+  accessToken,
+});
+const loginFailed = failedMessage => ({
+  type: LOGIN_FAILED,
+  failedMessage,
+});
 export const logout = () => ({
-    type: LOGOUT
-})
+  type: LOGOUT,
+});

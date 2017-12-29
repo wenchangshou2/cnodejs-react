@@ -13,13 +13,11 @@ export default class PCHeader extends React.Component {
         }
     }
     selectMenu=(e)=>{
-        console.log('click ', e);
         this.setState({
           current: e.key,
         });
     }
     toHome=(e)=>{
-        console.log('tohome')
         this.setState({
             current:'Home'
         })

@@ -15,23 +15,12 @@ import {
   LOGOUT,
 } from '../actions';
 
-// const selectedSubreddit = (state = 'job', action) => {
-//   console.log('selectedSubreddit', action, action.type, state)
-//   switch (action.type) {
-//     case SELECT_SUBREDDIT:
-//       return 'post'
-//       return action.subreddit
-//     default:
-//       return state
-//   }
-// }
 
 const articles = (state = {
   isFetching: false,
   didInvalidate: false,
   items: [],
 }, action) => {
-  console.log('posts2222222', action)
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
       return {
@@ -97,9 +86,8 @@ const postTopic = (state = {
   topic: {
     author: {},
     replies: [],
-  }
+  },
 }, action) => {
-  console.log('postTopic', state, action)
   switch (action.type) {
     case INVALIDATE_SUBREDDIT:
     case RECEIVE_POSTS:
@@ -109,7 +97,7 @@ const postTopic = (state = {
       return state
   }
 }
-const article_list = (state = {
+const articleList = (state = {
   isFetching: false,
   didInvalidate: false,
   items: []
@@ -189,7 +177,13 @@ const tab = (state = {
 const login = (state = { success: false }, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      return { ...state, succeed: true, loginName: action.loginName, loginId: action.loginId, accessToken: action.accessToken };
+      return {
+        ...state,
+        succeed: true,
+        loginName: action.loginName,
+        loginId: action.loginId,
+        accessToken: action.accessToken,
+      };
     case LOGIN_FAILED:
       return { ...state, succeed: false, failedMessage: action.failedMessage };
     case LOGOUT:
@@ -200,7 +194,7 @@ const login = (state = { success: false }, action) => {
 };
 const rootReducer = combineReducers({
   // postsBySubreddit,
-  article_list,
+  articleList,
   article,
   tab,
   user,

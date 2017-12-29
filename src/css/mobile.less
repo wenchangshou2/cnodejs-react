@@ -78,14 +78,6 @@
 //       background-color: red;
 
 //   }
-  .mobile_user_topic_collect_title{
-      margin-left: 5px;
-      width:80%;
-      display: inline-block;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-  }
   .mobileTopicTitle{
       font-size: 20px;
       color:white;
@@ -106,11 +98,6 @@
     max-width: 980px;
     margin: 0 auto;
     padding: 45px;
-}
-.mobile_user_topic_collect_icon{
-    width:30px;
-    height:30px;
-    border-radius: 30px;
 }
 .pcTopicList :hover{
     background-color: aliceblue;
@@ -181,6 +168,56 @@ div#mobileHomeHeader{
     button{
         width:80px;
     }
+}
+.flex
+.loginSuccess{
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  align-items: center;
+  height:300px;
+  background-color: #dce775;
+  padding-top: 70px;
+  img{
+    height: 100px;
+  }
+  h3{
+    font-size: 20px;
+  }
+}
+.user_topic_collect{
+  img{
+    width:40px;
+    border-radius: 40px;
+  }
+}
+.LoginUserInfo{
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 30px;
+  padding-top: 40px;
+  img{
+    width:60px;
+    border-radius: 60px;
+  }
+}
+.collectList{
+  border-bottom: #444 solid 1px;
+  img{
+    margin-right: 10px;
+  }
+}
+.mobile_user_topic_collect_title{
+  overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+}
+.mobileMenu{
+  li{
+    width:20%;
+  }
 }
 
 @media (max-width: 767px) {

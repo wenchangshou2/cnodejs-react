@@ -6,14 +6,14 @@ import MediaQuery from 'react-responsive';
 import PCHeader from './PC/PCHeader';
 import PCHome from './PC/PCHome';
 import PCfooter from './PC/PCFooter';
-import PCStart from './PC/PCStart';
+import PCStart from './PC/PCStart.jsx';
 import PCTopics from './PC/PCTopics.jsx';
-import PCSignin from './PC/PCSignin';
+import PCSignin from './PC/PCSignin.jsx';
 import PCApi from './PC/PCApi';
 import PCUser from './PC/PCUser.jsx';
-import MobileHome from './MOBILE/MobileHome';
-import MobileTopic from './MOBILE/MobileTopic';
-import MobileUser from './MOBILE/MobileUser';
+import MobileHome from './MOBILE/MobileHome.jsx';
+import MobileTopic from './MOBILE/MobileTopic.jsx';
+import MobileUser from './MOBILE/MobileUser.jsx';
 import MobileLogin from './MOBILE/MobileLogin';
 import { fetchAccess, getUser } from '../actions';
 
@@ -30,11 +30,12 @@ class App extends React.Component {
       const accessToken = masterInfo.accessToken;
       const loginName = masterInfo.loginName;
       LoadingAction(accessToken, loginName);
-    } else {
-      const accessToken = '6f91a397-1fe7-445f-bf29-30b5a9ab674e'
-      const loginName = 'wenchangshou2'
-      LoadingAction(accessToken, loginName)
     }
+    // } else {
+    //   const accessToken = '6f91a397-1fe7-445f-bf29-30b5a9ab674e'
+    //   const loginName = 'wenchangshou2'
+    //   LoadingAction(accessToken, loginName)
+    // }
   }
   render() {
     return(

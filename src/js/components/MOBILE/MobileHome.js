@@ -1,11 +1,11 @@
 import React from 'react';
 // import MobileHeader from './MobileHeader';
-import {connect} from 'react-redux';
-import {Tabs,Icon,BackTop,Affix,Row,Col,Badge,Avatar} from 'antd';
-const TabPane = Tabs.TabPane;
-import MobileList from './MobileList';
+import { connect } from 'react-redux';
 import Drawer from 'react-motion-drawer';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Tabs, Icon, BackTop, Affix, Row, Col, Badge, Avatar } from 'antd';
+const TabPane = Tabs.TabPane;
+import MobileList from './MobileList.jsx';
 const style = {
     background: "#F9F9F9",
     boxShadow: "rgba(0, 0, 0, 0.188235) 0px 10px 20px, rgba(0, 0, 0, 0.227451) 0px 6px 6px"
@@ -20,7 +20,6 @@ class MobileHome extends React.Component{
     }
 
     render(){
-        console.log('222',this.props)
         let {login,user} = this.props
         const {succeed} = login
 

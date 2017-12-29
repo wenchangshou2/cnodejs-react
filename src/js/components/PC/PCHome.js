@@ -3,7 +3,7 @@ import React from 'react';
 import {Row, Col, Card, Button} from 'antd';
 import ListHeader from './listHeader';
 import PageList from './pageList';
-import PCRightPanel from './PCRightPanel';
+import PCRightPanel from './PCRightPanel.jsx';
 // import App from './App'
 export default class PCHome extends React.Component {
     constructor(props) {
