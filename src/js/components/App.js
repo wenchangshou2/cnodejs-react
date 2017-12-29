@@ -15,11 +15,9 @@ import MobileHome from './MOBILE/MobileHome';
 import MobileTopic from './MOBILE/MobileTopic';
 import MobileUser from './MOBILE/MobileUser';
 import MobileLogin from './MOBILE/MobileLogin';
-import { fetchAccess } from '../actions';
+import { fetchAccess, get_user } from '../actions';
 
-
-
-class App extends React.Component{
+class App extends React.Component {
     componentWillMount() {
         const { dispatch } = this.props;
 
