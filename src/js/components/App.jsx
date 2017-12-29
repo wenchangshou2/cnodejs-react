@@ -7,40 +7,38 @@ import PCHeader from './PC/PCHeader';
 import PCHome from './PC/PCHome';
 import PCfooter from './PC/PCFooter';
 import PCStart from './PC/PCStart';
-import PCTopics from './PC/PCTopics';
+import PCTopics from './PC/PCTopics.jsx';
 import PCSignin from './PC/PCSignin';
 import PCApi from './PC/PCApi';
-import PCUser from './PC/PCUser';
+import PCUser from './PC/PCUser.jsx';
 import MobileHome from './MOBILE/MobileHome';
 import MobileTopic from './MOBILE/MobileTopic';
 import MobileUser from './MOBILE/MobileUser';
 import MobileLogin from './MOBILE/MobileLogin';
-import { fetchAccess, get_user } from '../actions';
+import { fetchAccess, getUser } from '../actions';
 
 class App extends React.Component {
-    componentWillMount() {
-        const { dispatch } = this.props;
-
-        const LoadingAction = (accesToken, loginName) => {
-            console.log(dispatch)
-            dispatch(fetchAccess(accesToken))
-            dispatch(get_user(loginName))
-        }
-        if (window.localStorage.getItem('masterInfo')) {
-            let masterInfo = window.localStorage.getItem('masterInfo')
-            masterInfo = JSON.parse(masterInfo)
-            const accessToken = masterInfo.accessToken;
-            const loginName = masterInfo.loginName;
-            LoadingAction(accessToken, loginName)
-        } else {
-            const accessToken = '6f91a397-1fe7-445f-bf29-30b5a9ab674e'
-            const loginName = 'wenchangshou2'
-            LoadingAction(accessToken, loginName)
-        }
+  componentWillMount() {
+    const { dispatch } = this.props;
+    const LoadingAction = (accesToken, loginName) => {
+      dispatch(fetchAccess(accesToken));
+      dispatch(getUser(loginName));
+    };
+    if (window.localStorage.getItem('masterInfo')) {
+      let masterInfo = window.localStorage.getItem('masterInfo');
+      masterInfo = JSON.parse(masterInfo);
+      const accessToken = masterInfo.accessToken;
+      const loginName = masterInfo.loginName;
+      LoadingAction(accessToken, loginName);
+    } else {
+      const accessToken = '6f91a397-1fe7-445f-bf29-30b5a9ab674e'
+      const loginName = 'wenchangshou2'
+      LoadingAction(accessToken, loginName)
     }
-    render(){
-        return(
-            <div>
+  }
+  render() {
+    return(
+        <div>
                 <MediaQuery query="(min-device-width: 1224px)">
                     <Router>
                         <div>
@@ -72,13 +70,15 @@ class App extends React.Component {
         )
     }
 
-}
-const mapStateToProps=state=>{
-    const {
-        user,login
-    }=state
-    return {
-        user,login
-    }
-}
-export default connect(mapStateToProps)(App)
+};
+const mapStateToProps = (state) => {
+  const {
+    user,
+    login,
+  } = state;
+  return {
+    user,
+    login,
+  };
+};
+export default connect(mapStateToProps)(App);

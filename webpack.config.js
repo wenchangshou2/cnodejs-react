@@ -1,31 +1,30 @@
-// var debug = process.env.NODE_ENV !== "production";
-var debug = true
-var webpack = require('webpack');
-var path = require('path');
+const debug = true;
+const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
   context: path.join(__dirname),
-  devtool: debug ? "inline-sourcemap" : null,
-  entry: "./src/js/root.js",
+  devtool: debug ? 'inline-sourcemap' : null,
+  entry: './src/js/root.jsx',
   module: {
     rules: [
       {
-        test: /\.js?$/,
+        test: /\.jsx?$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015',"stage-0",'react']
-        }
+          presets: ['es2015', 'stage-0', 'react'],
+        },
       },
       {
-        test:/\.css$/,
-        loader:"style-loader!css-loader"
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
       },
       {
-        test:/\.less$/,
-        loader:'style-loader!css-loader!less-loader'
-      }
-    ]
+        test: /\.less$/,
+        loader: 'style-loader!css-loader!less-loader',
+      },
+    ],
     // loaders: [{
     //     test: /\.js?$/,
     //     exclude: /(node_modules)/,
@@ -46,14 +45,14 @@ module.exports = {
   },
   output: {
     path: __dirname,
-    filename: "./src/bundle.js"
+    filename: './src/bundle.js',
   },
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       mangle: false,
-      sourcemap: false
+      sourcemap: false,
     }),
   ],
 };

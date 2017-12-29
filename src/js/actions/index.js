@@ -65,13 +65,13 @@ function getArticleList(subreddit,page=1,limit=10,mdrender=false)  {
             })
     }
 }
-export const get_user=(userId)=>dispatch=>{
+export const getUser=(userId)=>dispatch=>{
     dispatch(request_user(userId))
     fetch(`https://cnodejs.org/api/v1/user/${userId}`).then((response)=>response.json()).then((json)=>{
         dispatch(receive_user(json['data']))
     })
 }
-export const get_user_topic_collect=(userId)=>dispatch=>{
+export const getUser_topic_collect=(userId)=>dispatch=>{
     fetch(`https://cnodejs.org/api/v1/topic_collect/${userId}`)
     .then((response) => response.json())
     .then((json) => {

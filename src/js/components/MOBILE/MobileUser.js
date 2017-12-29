@@ -1,5 +1,5 @@
 import React from 'react';
-// import { get_user, get_user_topic_collect } from '../actions/index';
+// import { getUser, getUser_topic_collect } from '../actions/index';
 // import MobileList from './MobileList';
 import { Card } from 'antd';
 import { connect } from 'react-redux';

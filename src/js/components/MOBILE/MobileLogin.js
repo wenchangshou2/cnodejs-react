@@ -1,7 +1,7 @@
 import React from 'react';
 import MobileHeader from './MobileHeader'
 import {Input,Switch,Button} from 'antd'
-import { fetchAccess, getUser, get_user } from '../../actions/index';
+import { fetchAccess, getUser } from '../../actions/index';
 import {connect} from 'react-redux';
 class MobileLogin extends React.Component {
     constructor(props){
@@ -36,7 +36,7 @@ class MobileLogin extends React.Component {
                 console.log('lll',masterInfo)
                 window.localStorage.setItem('masterInfo',masterInfo)
             }
-            dispatch(get_user(loginName))
+            dispatch(getUser(loginName))
         }
     }
     render(){
