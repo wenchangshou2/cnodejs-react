@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import 'github-markdown-css';
 import logger from 'redux-logger';
 import 'antd/lib/button/style';
 import { createStore, applyMiddleware } from 'redux';

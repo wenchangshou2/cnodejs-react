@@ -10,16 +10,27 @@ import MobileHeader from './MobileHeader';
 class MobileUser extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      lastUser:'',
+    };
   }
   componentWillMount() {
     const userId = this.props.match.params.id;
     this.props.dispatch(getUser(userId));
     this.props.dispatch(getUser_topic_collect(userId));
   }
+  componentWillReceiveProps(newsProps) {
+    const userId = this.props.match.params.id;
+    const lastUserId = newsProps.match.params.id;
+    if (userId != lastUserId) {
+      this.props.dispatch(getUser(lastUserId));
+      this.props.dispatch(getUser_topic_collect(lastUserId));
+    }
+  }
   render() {
-    const { user,user_topic_collect } = this.props
-    let user_topic_collect_list = user_topic_collect.map((item, index) => {
+    const { user,userTopicCollect } = this.props
+    console.log('22', userTopicCollect)
+    let userTopicCollectList = userTopicCollect.map((item, index) => {
       return (
         <div key={index} className="collectList">
           <div className="user_topic_collect">
@@ -58,7 +69,7 @@ class MobileUser extends React.Component {
       </div>
     )) : ''
     return (
-      <div>
+      <div >
         <MobileHeader title="用户信息" />
         <div className="LoginUserInfo">
           <img src={user.avatar_url} alt={user.loginname} />
@@ -67,7 +78,7 @@ class MobileUser extends React.Component {
           <span>注册于:{transformDate(user.create_at)}</span>
         </div>
         <Card title="收藏的话题" style={{ width: '90%', padding: '0', margin: '0 auto' }}>
-          {user_topic_collect_list}
+          {userTopicCollectList}
         </Card>
         <Card title="最近参与的话题" style={{ width: '95%', margin: '0 auto', marginBottom: '5px' }}>
           {user_recent_replies}
@@ -81,12 +92,12 @@ class MobileUser extends React.Component {
 }
 const mapStateToProps = state => {
   const {
-        user, user_topic_collect
+        user, userTopicCollect
     } = state;
 
   return {
     user,
-    user_topic_collect: user_topic_collect['user_topic_collect']
+    userTopicCollect
   }
 }
 export default connect(mapStateToProps)(MobileUser)

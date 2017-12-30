@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import transformDate from '../../../utils/transformDate';
 import { Card, Avatar, Row, Col } from 'antd';
+import { get_article, getUser } from '../../actions';
+import { connect } from 'react-redux';
 
-const ReactMarkdown = require('react-markdown');
 
 // import App from './App'
-export default class PCTopics extends React.Component {
+class PCTopics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,49 +19,37 @@ export default class PCTopics extends React.Component {
     const topicId = this.props.match.params.id;
     const options = {
       method: 'GET',
-      qs: {
-        mdrender: false,
-      },
     };
-    const requestUrl = `https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${false}`;
-    fetch(requestUrl, options).then(response => response.json()).then((data) => {
-      this.setState({ news: data.data });
-      this.getAuthorInfo(data['data']['author']['loginname']);
-    });
+    this.props.dispatch(get_article(topicId))
+  }
+  componentWillReceiveProps(nextProps){
+    console.log('333', this.props.topic.author.loginname)
+    let userId=this.props.topic.author.loginname;
+    let nextUserId=nextProps.topic.author.loginname;
+    let topicId=this.props.match.params.id;
+    let nextTopicId=nextProps.match.params.id;
+    if(userId!==nextUserId){
+      this.props.dispatch(getUser(nextUserId));
+    }
+    if (topicId !== nextTopicId) {
+      this.props.dispatch(get_article(nextTopicId));
+    }
   }
   getTopicList() {
     const topicId = this.props.match.params.id;
-    const options = {
-      method: 'GET',
-      qs: {
-        mdrender: false,
-      },
-    };
-    const requestUrl = `https://cnodejs.org/api/v1/topic/${topicId}?mdrender=${false}`;
-    fetch(requestUrl, options).then((response) => response.json()).then((data) => {
-      this.setState({ news: data.data });
-      this.getAuthorInfo(data['data']['author']['loginname']);
-    });
+    this.props.dispatch(get_article(topicId))
   }
   getAuthorInfo(user) {
-    const options = {
-      method: 'GET',
-    };
-    const requestUrl = `https://cnodejs.org/api/v1/user/${user}`
-    fetch(requestUrl, options).then(response => response.json()).then((data) => {
-      this.setState({ authorInfo: data.data });
-    });
+    // const topicId = this.props.match.params.id;
+    // this.props.dispatch(get_article(topicId))
   }
   render() {
-    const { news, authorInfo } = this.state;
-    if (news.author === undefined) return '';
-    const authorName = news.author === undefined
-      ? '' : news.author.loginname;
-    const len = news.replies === undefined
-      ? 0 : news.replies.length;
-    const repliesArray = len > 0
-      ? news.replies.map((itm, index) => (
-        <div className="cell reply_area reply_item" reply_id={itm.id}>
+    // const { news, authorInfo } = this.state;
+    let { topic,user } = this.props;
+    console.log('topic', topic)
+    const repliesArray = topic.replies.length > 0
+      ? topic.replies.map((itm, index) => (
+        <div key={index} className="cell reply_area reply_item" reply_id={itm.id}>
           <div className="author_content">
             <Link to={`/user/${itm.author.loginname}`} className="user_avatar">
               <img src={itm.author.avatar_url} title={itm.author.loginname} />
@@ -78,9 +67,9 @@ export default class PCTopics extends React.Component {
               </span>
             </div>
           </div>
+
           <div className="reply_content from-alsotang">
-            <div>
-              <ReactMarkdown source={itm.content} mode="skip" />
+            <div className="mobile_reply_content markdown-body" dangerouslySetInnerHTML={{ __html: itm.content }}>
             </div>
           </div>
           <div className="clearfix">
@@ -88,10 +77,12 @@ export default class PCTopics extends React.Component {
           </div>
         </div>
       )) : '';
+    console.log('ll', repliesArray,topic.length);
     let recentTopics = [];
-    if (authorInfo.recent_topics !== undefined) {
-      recentTopics = authorInfo['recent_topics'].map((itm, index) => (
-        <li>
+    if (user.recent_topics !== undefined) {
+      console.log('user', user)
+      recentTopics = user['recent_topics'].map((itm, index) => (
+        <li key={index}>
           <div>
             <Link className="topic_title2" to={`/topic/${itm.id}`} title={itm.title}>
               {itm.title}
@@ -115,33 +106,37 @@ export default class PCTopics extends React.Component {
             <div className="header topic_header">
               <span className="topic_full_title">
                 <span
-                  className={news.top
+                  className={topic.top
                     ? 'put_top'
                     : ''}
                 >
                 置顶
                 </span>
                 {/* 测试请发到客户端测试专区，违规影响用户的，直接封号 */}
-                {news.title}
+                {topic.title}
               </span>
               <div className="changes">
-                <span>{news.create_at}</span>
-                <span>作者：<Link to={`/user/${authorName}`}></Link>
+                <span>{topic.create_at}</span>
+                <span>作者：<Link to={`/user/${topic.author.loginname}`}></Link>
                 </span>
-                <span>{news.visit_count}
+                <span>{topic.visit_count}
                   次浏览</span>
                 <span>最后一次编辑是{'一年前'}</span>
                 {/* <span>来自 {this.strTocaTegory()}</span> */}
               </div>
             </div>
             <div className="inner topic">
-              <ReactMarkdown source={news.content} mode="skip" />,
+
+
+                <div className="mobile_reply_content markdown-body" dangerouslySetInnerHTML={{__html:topic.content}}>
+                </div>
+              {/* <ReactMarkdown source={news.content} mode="skip" />, */}
             </div>
 
             <Card
-              title={`${news.reply_count}条回答`}
+              title={`${topic.reply_count}条回答`}
               style={{
-                display: news.reply_count === 0
+                display: topic.reply_count === 0
                   ? 'none'
                   : '',
               }}
@@ -157,16 +152,16 @@ export default class PCTopics extends React.Component {
           >
             <Card title="作者">
               <div>
-                <Link className="user_avatar" to={authorName}>
+                <Link className="user_avatar" to={topic.author.loginname}>
                   {/* <img src={news.author.avatar_url} title={author_name}/> */}
-                  <Avatar src={news.author.avatar_url} />
+                  <Avatar src={topic.author.avatar_url} />
                 </Link>
                 <span className="user_name">
-                  <Link className="dark" to={`/user/${authorName}`}>{authorName}</Link>
+                  <Link className="dark" to={`/user/${topic.author.loginname}`}>{topic.author.loginname}</Link>
                 </span>
                 <div className="board clearfix">
                   <div className="floor">
-                    <span className="big">积分： {authorInfo.score}
+                    <span className="big">积分： {user.score}
                     </span>
                   </div>
                 </div>
@@ -185,3 +180,12 @@ export default class PCTopics extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  const { article,user } = state
+  const { topic } = article
+  console.log('user',user)
+  return {
+    topic,user
+  }
+}
+export default connect(mapStateToProps)(PCTopics);

@@ -165,7 +165,7 @@ const mapStateToProps = state => {
     const {
         articleList,tab
     }=state
-    let menu=state['tab']['tab']
+    let menu=state['tab']
     const {items,isFetching} = articleList || []
     return {
         items,

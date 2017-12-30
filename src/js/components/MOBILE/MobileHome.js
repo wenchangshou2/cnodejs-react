@@ -9,27 +9,27 @@ import MobileList from './MobileList.jsx';
 const style = {
     background: "#F9F9F9",
     boxShadow: "rgba(0, 0, 0, 0.188235) 0px 10px 20px, rgba(0, 0, 0, 0.227451) 0px 6px 6px"
-  };
-class MobileHome extends React.Component{
+};
+class MobileHome extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-            width:'80%' ,
-            openLeft:false  
+        this.state = {
+            width: '80%',
+            openLeft: false
         }
     }
 
-    render(){
-        let {login,user} = this.props
-        const {succeed} = login
+    render() {
+        let { login, user } = this.props
+        const { succeed } = login
 
         const drawerProps = {
             overlayColor: "rgba(255,255,255,0.6)",
             drawerStyle: style
-          };
-          let {openLeft} =this.state;
+        };
+        let { openLeft } = this.state;
 
-        return(
+        return (
             <div>
                 <Drawer
                     {...drawerProps}
@@ -39,12 +39,12 @@ class MobileHome extends React.Component{
                     onChange={openState => this.setState({ openLeft: openState })}
                     className="myDrawer"
                 >
-                    {succeed&&
-                    <div>
-                        <h1>登录成功</h1>
-                    </div>
+                    {succeed &&
+                        <div>
+                            <h1>登录成功</h1>
+                        </div>
                     }
-                    {!succeed&&<div className="up">
+                    {!succeed && <div className="up">
                         <Link to="/login">
                             <Avatar icon="user" className="icon" size="large" />
                         </Link>
@@ -55,11 +55,11 @@ class MobileHome extends React.Component{
                 <Affix>
                     <Row id="mobileHomeHeader" type="flex" align="middle" justify="space-between">
                         <Col span={6} push={2}>
-                              <a
-                              style={{ padding: 15 }}
-                              className=""
-                              onClick={() =>
-                                this.setState({ openLeft: !openLeft })}
+                            <a
+                                style={{ padding: 15 }}
+                                className=""
+                                onClick={() =>
+                                    this.setState({ openLeft: !openLeft })}
                             >
                                 <Icon type="folder-open" className="more" />
                             </a>
@@ -69,26 +69,26 @@ class MobileHome extends React.Component{
                         </Col>
                         <Col span={6} push={3}>
                             <Badge count={5}>
-                                <img src="/src/images/ld.svg"/>
+                                <img src="/src/images/ld.svg" />
                             </Badge>
                         </Col>
                     </Row>
                 </Affix>
                 <Tabs>
                     <TabPane tab="全部" key="1">
-                        <MobileList type="all"/>
+                        <MobileList type="all" />
                     </TabPane>
                     <TabPane tab="精华" key="2">
-                        <MobileList type="good"/>
+                        <MobileList type="good" />
                     </TabPane>
                     <TabPane tab="分享" key="3">
-                        <MobileList type="share"/>
+                        <MobileList type="share" />
                     </TabPane>
                     <TabPane tab="问答" key="4">
-                        <MobileList type="ask"/>
+                        <MobileList type="ask" />
                     </TabPane>
                     <TabPane tab="招聘" key="5">
-                        <MobileList type="job"/>
+                        <MobileList type="job" />
                     </TabPane>
                 </Tabs>
                 <div id="custom-back-top">
@@ -102,12 +102,12 @@ class MobileHome extends React.Component{
         )
     }
 }
-const mapStateToProps=state=>{
+const mapStateToProps = state => {
     const {
-        user,login
-    }=state
+        user, login
+    } = state
     return {
-        user,login
+        user, login
     }
 }
 export default connect(mapStateToProps)(MobileHome)

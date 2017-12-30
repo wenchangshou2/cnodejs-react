@@ -3,7 +3,6 @@ import React from 'react';
 import {connect} from 'react-redux'
 import { Affix, Row, Col, Icon, Avatar } from 'antd';
 import { get_article } from '../../actions/index';
-let ReactMarkdown = require('react-markdown');
 import { Link } from 'react-router-dom';
 
 import transformDate from '../../../utils/transformDate';
