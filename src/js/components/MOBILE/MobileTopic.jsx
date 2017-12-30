@@ -40,7 +40,7 @@ class MobileTopic extends React.Component {
         const {topic}=this.props
         let reply_list=topic.reply_count>0?
         topic['replies'].map((reply,idx)=>( 
-            <div style={{height:'150px'}}>
+            <div >
                 <div className="mobile_reply_author">
                     <Row>
                         <Col span={4}>
@@ -59,7 +59,6 @@ class MobileTopic extends React.Component {
                         </Col>
                     </Row>
                 </div>
-                <br/><br/>
                 <div className="mobile_reply_content markdown-body" dangerouslySetInnerHTML={{__html:reply.content}}>
                 </div>
             </div>

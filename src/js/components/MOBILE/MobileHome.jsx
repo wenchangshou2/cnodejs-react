@@ -30,9 +30,8 @@ class MobileHome extends React.Component {
         <MobileDrawer openLeft={openLeft} onChange={this.onChange} />
         <Affix>
           <Row id="mobileHomeHeader" type="flex" align="middle" justify="space-between">
-            <Col span={6} push={2}>
+            <Col span={5} push={1}>
               <a
-                style={{ padding: 15 }}
                 className=""
                 onClick={() =>
                   this.setState({ openLeft: !openLeft })}
@@ -43,7 +42,7 @@ class MobileHome extends React.Component {
             <Col span={12} className="title">
               NodeJS论坛
             </Col>
-            <Col span={6} push={3}>
+            <Col span={3} pull={1} >
               <Badge count={5}>
                 <img src="/src/images/ld.svg" alt="ld" />
               </Badge>

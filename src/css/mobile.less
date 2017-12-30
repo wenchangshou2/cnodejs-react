@@ -45,9 +45,9 @@
   }
 
   .mobile_user_avatar img{
-      width:40px;
-      height:40px;
-      border-radius: 20px;
+      width:30px;
+      height:30px;
+      border-radius: 30px;
     text-align:center;
     margin: 0 auto;
     position: absolute;
@@ -85,7 +85,8 @@
   }
   .mobile_article_author{
       background-color: aliceblue;
-      height:60px;
+      height:70px;
+      padding-top: 10px;
   }
   .mobile_article_author img{
       width:50px;
@@ -219,9 +220,17 @@ white-space: nowrap;
     width:20%;
   }
 }
-
+.mobile_reply_author{
+    margin-bottom: 10px;
+}
 @media (max-width: 767px) {
     .markdown-body {
         padding: 15px;
+    }
+}
+.markdown-body {
+    img{
+        width:60px;
+        border-radius: 60px;
     }
 }
