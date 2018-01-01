@@ -3,18 +3,18 @@ import { connect } from 'react-redux';
 import { BackTop } from 'antd';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
-import PCHeader from './PC/PCHeader';
-import PCHome from './PC/PCHome';
-import PCfooter from './PC/PCFooter';
+import PCHeader from './PC/PCHeader.jsx';
+import PCHome from './PC/PCHome.jsx';
+import PCfooter from './PC/PCFooter.jsx';
 import PCStart from './PC/PCStart.jsx';
 import PCTopics from './PC/PCTopics.jsx';
 import PCSignin from './PC/PCSignin.jsx';
-import PCApi from './PC/PCApi';
+import PCApi from './PC/PCApi.jsx';
 import PCUser from './PC/PCUser.jsx';
 import MobileHome from './MOBILE/MobileHome.jsx';
 import MobileTopic from './MOBILE/MobileTopic.jsx';
 import MobileUser from './MOBILE/MobileUser.jsx';
-import MobileLogin from './MOBILE/MobileLogin';
+import MobileLogin from './MOBILE/MobileLogin.jsx';
 import { fetchAccess, getUser } from '../actions';
 
 class App extends React.Component {

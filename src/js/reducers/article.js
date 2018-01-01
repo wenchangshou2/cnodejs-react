@@ -1,9 +1,10 @@
-import { INVALIDATE_SUBREDDIT, REQUEST_ARTICLE, RECEIVE_ARTICLE } from '../actions';
+import { INVALIDATE_SUBREDDIT, REQUEST_ARTICLE, RECEIVE_ARTICLE,FETCH_COMMENT } from '../actions';
 
 const post = (state = {
     isFetching: false,
     didInvalidate: false,
     topic: {},
+    currentTopicId: ''
 }, action) => {
     switch (action.type) {
         case INVALIDATE_SUBREDDIT:
@@ -23,7 +24,10 @@ const post = (state = {
                 didiInvalidate: false,
                 topic: action.posts,
                 lastUpdated: action.receivedAt,
+                currentTopicId:action.posts.id
             });
+        case FETCH_COMMENT:
+            return { ...state, isCommented: action.success }
         default:
             return state;
     }
@@ -36,7 +40,8 @@ const article = (state = {
             loginname: '',
         },
         replies: []
-    }
+    },
+    currentTopicId: '',
 }, action) => {
     switch (action.type) {
         case INVALIDATE_SUBREDDIT:

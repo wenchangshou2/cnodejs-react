@@ -1,5 +1,5 @@
 import React from 'react';
-import MobileHeader from './MobileHeader'
+import MobileHeader from './MobileHeader.jsx'
 import { Input, Switch, Button } from 'antd'
 import { fetchAccess, getUser } from '../../actions/index';
 import { connect } from 'react-redux';

@@ -1,30 +1,31 @@
 
 import React from 'react';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import { Affix, Row, Col, Icon, Avatar } from 'antd';
 import { get_article } from '../../actions/index';
 import { Link } from 'react-router-dom';
 
 import transformDate from '../../../utils/transformDate';
-import MobileHeader from './MobileHeader';
+import MobileHeader from './MobileHeader.jsx';
+import MobileReply from './MobileReply.jsx';
 
 
 class MobileTopic extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-            topicId:'',
-            topic:''
+        this.state = {
+            topicId: '',
+            topic: ''
         }
     }
-    componentWillMount(){
+    componentWillMount() {
         this.props.dispatch(get_article(this.props.match.params.id))
     }
     strToTop(isGood, isTop, tab) {
-        if(isGood||isTop){
+        if (isGood || isTop) {
             return '置顶'
         }
-        switch(tab){
+        switch (tab) {
             case 'share':
                 return '分享'
             case 'ask':
@@ -35,37 +36,15 @@ class MobileTopic extends React.Component {
                 return '置顶'
         }
     }
-
+    onLike(e) {
+        console.log('ll', e.target.ups)
+    }
     render() {
-        const {topic}=this.props
-        let reply_list=topic.reply_count>0?
-        topic['replies'].map((reply,idx)=>( 
-            <div >
-                <div className="mobile_reply_author">
-                    <Row>
-                        <Col span={4}>
-                            <Link to={`/user/${reply.author.loginname}`} className="mobile_user_avatar">
-                                <img src={reply.author.avatar_url} title={reply.author.loginname}/>
-                            </Link>
-                        </Col>
-                        <Col span={16}>
-                            <div>{idx}楼 &nbsp;&nbsp;{transformDate(reply.create_at)}</div>
-                        </Col>
-                        <Col span={4}>
-                            <div>
-                                <Icon type="like" />
-                                {reply.ups.length}
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
-                <div className="mobile_reply_content markdown-body" dangerouslySetInnerHTML={{__html:reply.content}}>
-                </div>
-            </div>
-        )):''
+        const { topic, login, switchSupportInfo, dispatch,currentTopicId } = this.props
+       
         return (
             <div>
-                <MobileHeader/>
+                <MobileHeader />
                 <div className="mobile_article_author">
                     <Row>
                         <Col span={4}>
@@ -86,29 +65,35 @@ class MobileTopic extends React.Component {
                     </Row>
                 </div>
                 <div>
-                    <h1 style={{textAlign:'center',padding:'5px'}}>{topic.title}</h1>
+                    <h1 style={{ textAlign: 'center', padding: '5px' }}>{topic.title}</h1>
                 </div>
                 <div className="mobile_article_content">
                     {/* <ReactMarkdown source={topic.content} mode="skip"/> */}
-                    <div className="markdown-body" dangerouslySetInnerHTML={{__html:topic.content}}>
+                    <div className="markdown-body" dangerouslySetInnerHTML={{ __html: topic.content }}>
                         {/* {topic.content} */}
                     </div>
                 </div>
                 <div className="mobile_article_reply">
-                    <div>
+                    <MobileReply replies={topic.replies} {...({login,dispatch,switchSupportInfo,currentTopicId})} />
+                    {/* <div>
                         {topic.reply_count}次回复
+                        {}
                         {reply_list}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         )
     }
 }
-const mapStateToProps=state=>{
-    const {article} =state
-    const {topic}=article
+const mapStateToProps = state => {
+    const { article, login, user } = state;
+    const { switchSupportInfo,topic,currentTopicId } = article;
     return {
-       topic 
+        topic,
+        login,
+        user,
+        switchSupportInfo,
+        currentTopicId
     }
 }
-export default  connect(mapStateToProps)(MobileTopic) 
+export default connect(mapStateToProps)(MobileTopic) ;

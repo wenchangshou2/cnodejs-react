@@ -1,8 +1,8 @@
 import React from 'react';
 
 import {Row, Col, Card, Button} from 'antd';
-import ListHeader from './listHeader';
-import PageList from './pageList';
+import ListHeader from './listHeader.jsx';
+import PageList from './pageList.jsx';
 import PCRightPanel from './PCRightPanel.jsx';
 // import App from './App'
 export default class PCHome extends React.Component {

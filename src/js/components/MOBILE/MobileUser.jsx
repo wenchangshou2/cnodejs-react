@@ -5,13 +5,13 @@ import { Card } from 'antd';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import transformDate from '../../../utils/transformDate';
-import MobileHeader from './MobileHeader';
+import MobileHeader from './MobileHeader.jsx';
 
 class MobileUser extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lastUser:'',
+      lastUser: '',
     };
   }
   componentWillMount() {
@@ -28,14 +28,14 @@ class MobileUser extends React.Component {
     }
   }
   render() {
-    const { user,userTopicCollect } = this.props
+    const { user, userTopicCollect } = this.props
     console.log('22', userTopicCollect)
     let userTopicCollectList = userTopicCollect.map((item, index) => {
       return (
         <div key={index} className="collectList">
           <div className="user_topic_collect">
             <Link to={`/user/${item.author !== undefined ? item.author.loginname : ''}`}>
-              <img  src={item.author.avatar_url} />
+              <img src={item.author.avatar_url} />
             </Link>
             <Link to={`/topic/${item.id}`}>
               <span className="mobile_user_topic_collect_title">{item.title}</span>

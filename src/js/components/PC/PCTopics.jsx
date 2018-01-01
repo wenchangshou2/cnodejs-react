@@ -17,18 +17,15 @@ class PCTopics extends React.Component {
   }
   componentWillMount(nextProps) {
     const topicId = this.props.match.params.id;
-    const options = {
-      method: 'GET',
-    };
     this.props.dispatch(get_article(topicId))
   }
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     console.log('333', this.props.topic.author.loginname)
-    let userId=this.props.topic.author.loginname;
-    let nextUserId=nextProps.topic.author.loginname;
-    let topicId=this.props.match.params.id;
-    let nextTopicId=nextProps.match.params.id;
-    if(userId!==nextUserId){
+    let userId = this.props.topic.author.loginname;
+    let nextUserId = nextProps.topic.author.loginname;
+    let topicId = this.props.match.params.id;
+    let nextTopicId = nextProps.match.params.id;
+    if (userId !== nextUserId) {
       this.props.dispatch(getUser(nextUserId));
     }
     if (topicId !== nextTopicId) {
@@ -44,9 +41,7 @@ class PCTopics extends React.Component {
     // this.props.dispatch(get_article(topicId))
   }
   render() {
-    // const { news, authorInfo } = this.state;
-    let { topic,user } = this.props;
-    console.log('topic', topic)
+    let { topic, user } = this.props;
     const repliesArray = topic.replies.length > 0
       ? topic.replies.map((itm, index) => (
         <div key={index} className="cell reply_area reply_item" reply_id={itm.id}>
@@ -60,7 +55,7 @@ class PCTopics extends React.Component {
             </div>
             <div className="user_action">
               <span>
-                <i className="fa up_btn fa-thumbs-o-up" title="喜欢"/>
+                <i className="fa up_btn fa-thumbs-o-up" title="喜欢" />
                 <span className="up-count">
                   {itm.visit_count}
                 </span>
@@ -77,10 +72,8 @@ class PCTopics extends React.Component {
           </div>
         </div>
       )) : '';
-    console.log('ll', repliesArray,topic.length);
     let recentTopics = [];
     if (user.recent_topics !== undefined) {
-      console.log('user', user)
       recentTopics = user['recent_topics'].map((itm, index) => (
         <li key={index}>
           <div>
@@ -101,7 +94,7 @@ class PCTopics extends React.Component {
         }}
       >
         <Row>
-          <Col span={2}/>
+          <Col span={2} />
           <Col span={13}>
             <div className="header topic_header">
               <span className="topic_full_title">
@@ -110,7 +103,7 @@ class PCTopics extends React.Component {
                     ? 'put_top'
                     : ''}
                 >
-                置顶
+                  置顶
                 </span>
                 {/* 测试请发到客户端测试专区，违规影响用户的，直接封号 */}
                 {topic.title}
@@ -128,8 +121,8 @@ class PCTopics extends React.Component {
             <div className="inner topic">
 
 
-                <div className="mobile_reply_content markdown-body" dangerouslySetInnerHTML={{__html:topic.content}}>
-                </div>
+              <div className="mobile_reply_content markdown-body" dangerouslySetInnerHTML={{ __html: topic.content }}>
+              </div>
               {/* <ReactMarkdown source={news.content} mode="skip" />, */}
             </div>
 
@@ -181,11 +174,11 @@ class PCTopics extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  const { article,user } = state
+  const { article, user } = state
   const { topic } = article
-  console.log('user',user)
+  console.log('user', user)
   return {
-    topic,user
+    topic, user
   }
 }
 export default connect(mapStateToProps)(PCTopics);

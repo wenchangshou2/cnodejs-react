@@ -5,7 +5,7 @@ const tab = (state = {
     // const menu = state.tab;
     switch (action.type) {
         case SET_TAB:
-            return { ...action.tab };
+            return action.tab ;
         default:
             return state;
     }
