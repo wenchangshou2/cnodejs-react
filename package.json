@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --content-base . --inline --hot --history-api-fallback --host 0.0.0.0",
+    "start": "webpack-dev-server --content-base ./build --inline --hot --history-api-fallback --host 0.0.0.0",
     "test": "jest",
-    "test:watch": "cnpm test -- -- watch"
+    "test:watch": "cnpm test -- -- watch",
+    "build:webpack": "cross-env NODE_ENV=production webpack --config webpack.production.config.js --progress ",
+    "build": "npm run clean && npm run build:webpack"
   },
   "keywords": [],
   "author": "",

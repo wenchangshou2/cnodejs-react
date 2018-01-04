@@ -30,7 +30,6 @@ class MobileList extends React.Component {
       this.state.articles = [];
       this.state.articles.length = 0;
       this.setState({ lastMenu: nextProps.type, page: 1 });
-      this.props.dispatch(fetchPostsIfNeeded(nextProps.type, 1));
     }
   }
   loadMore() {
