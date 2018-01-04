@@ -43,7 +43,7 @@ class MobileHome extends React.Component {
               NodeJS论坛
             </Col>
             <Col span={3} pull={1} >
-              <Badge count={5}>
+              <Badge count={0}>
                 <img src="/src/images/ld.svg" alt="ld" />
               </Badge>
             </Col>

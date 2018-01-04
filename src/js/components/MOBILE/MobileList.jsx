@@ -3,7 +3,8 @@ import { Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import { connect } from 'react-redux';
-import { lazyload } from 'react-lazyload';
+import LazyLoad  from 'react-lazyload';
+
 import transformDate from '../../../utils/transformDate';
 import { fetchPostsIfNeeded } from '../../actions/index';
 
@@ -20,17 +21,21 @@ class MobileList extends React.Component {
       lastMenu: 'all',
     };
   }
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({ loading: false });
-    }, 3000);
-  }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.type !== this.state.lastMenu) {
+    console.log('update', nextProps)
+    let articles = this.state.articles;
+    const { isFetching } = this.props;
+    if (nextProps.type !== this.state.lastMenu&&!isFetching) {
       this.state.articles = [];
       this.state.articles.length = 0;
-      this.setState({ lastMenu: nextProps.type, page: 1 });
+      this.setState({ lastMenu: nextProps.type, page: 1,articles:[],hasMore:false });
       this.props.dispatch(fetchPostsIfNeeded(nextProps.type, 1));
+    }else{
+      if(isFetching){
+        nextProps.items.map((article) => {
+          articles.push(article);
+        })
+      }
     }
   }
   loadMore() {
@@ -73,16 +78,16 @@ class MobileList extends React.Component {
     const { news } = this.state;
     const { isMore, loading, hasMoreItems, hasMore } = this.state
     const { items } = this.props
-    // let articles=[]
+    let newArticle=[]
     let self = this
-    items.map((newsItem, index) => {
-      self.state.articles.push(
-        <Row key={self.state.articles.length + 1} className="mobileTopicList">
+    this.state.articles.map((newsItem, index) => {
+      newArticle.push(
+        <Row key={index} className="mobileTopicList">
           <Col span={5}>
             <Link to={`/user/${newsItem.author.loginname}`} className="mobile_user_avatar">
-              <lazyload height={200} throttle={200}>
+              <LazyLoad  height={200} throttle={200}>
                 <img src={newsItem.author.avatar_url} title={newsItem.author.loginname} />
-              </lazyload>
+              </LazyLoad >
             </Link>
           </Col>
           <Col span={17}>
@@ -124,7 +129,7 @@ class MobileList extends React.Component {
           loader={<div className="loader">Loading ...</div>}
         >
           <div>
-            {this.state.articles}
+            {newArticle}
           </div>
         </InfiniteScroll>
 
