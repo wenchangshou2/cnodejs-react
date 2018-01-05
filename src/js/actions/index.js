@@ -106,7 +106,7 @@ const shouldFetchPosts = (state, subreddit) => {
   return posts.didInvalidate;
 };
 
-export function fetchPostsIfNeeded(subreddit, page = 1, limit = 10) {
+export function fetchPostsIfNeeded(subreddit, page = 1, limit = 30) {
   return (dispatch, getState) => {
     if (shouldFetchPosts(getState(), subreddit)) {
       return dispatch(getArticleList(subreddit, page, limit));
