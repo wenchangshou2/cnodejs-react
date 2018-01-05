@@ -3,7 +3,7 @@ import { Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroller';
 import { connect } from 'react-redux';
-import LazyLoad  from 'react-lazyload';
+import LazyLoad from 'react-lazyload';
 
 import transformDate from '../../../utils/transformDate';
 import { fetchPostsIfNeeded } from '../../actions/index';
@@ -22,16 +22,15 @@ class MobileList extends React.Component {
     };
   }
   componentWillReceiveProps(nextProps) {
-    console.log('update', nextProps)
     let articles = this.state.articles;
     const { isFetching } = this.props;
-    if (nextProps.type !== this.state.lastMenu&&!isFetching) {
+    if (nextProps.type !== this.state.lastMenu && !isFetching) {
       this.state.articles = [];
       this.state.articles.length = 0;
-      this.setState({ lastMenu: nextProps.type, page: 1,articles:[],hasMore:false });
+      this.setState({ lastMenu: nextProps.type, page: 1, articles: [], hasMore: false });
       this.props.dispatch(fetchPostsIfNeeded(nextProps.type, 1));
-    }else{
-      if(isFetching){
+    } else {
+      if (isFetching) {
         nextProps.items.map((article) => {
           articles.push(article);
         })
@@ -76,17 +75,16 @@ class MobileList extends React.Component {
   isGood = (good) => good ? <span style={{ color: 'red' }}>&nbsp;&nbsp;精</span> : ''
   render() {
     const { news } = this.state;
-    const { isMore, loading, hasMoreItems, hasMore } = this.state
-    const { items } = this.props
-    let newArticle=[]
-    let self = this
+    const { isMore, loading, hasMoreItems, hasMore } = this.state;
+    const { items } = this.props;
+    let newArticle = [];
     this.state.articles.map((newsItem, index) => {
       newArticle.push(
         <Row key={index} className="mobileTopicList">
           <Col span={5}>
             <Link to={`/user/${newsItem.author.loginname}`} className="mobile_user_avatar">
-              <LazyLoad  height={200} throttle={200}>
-                <img src={newsItem.author.avatar_url} title={newsItem.author.loginname} />
+              <LazyLoad height={200} throttle={200}>
+                <img src={newsItem.author.avatar_url} title={newsItem.author.loginname} alt="author_avatar" />
               </LazyLoad >
             </Link>
           </Col>
@@ -96,7 +94,8 @@ class MobileList extends React.Component {
                 <header className="">
                   <div className="mobile_title">
                     {this.isGood(newsItem.good)}{this.isTop(newsItem.top)}
-                    &nbsp;&nbsp;{newsItem.title}</div>
+                    &nbsp;&nbsp;{newsItem.title}
+                  </div>
                 </header>
                 <p className="mobile_article_extra">
                   <span className="mobile_reply_count">
@@ -117,8 +116,7 @@ class MobileList extends React.Component {
               </section>
             </Link>
           </Col>
-        </Row>,
-      );
+        </Row>);
     });
     return (
       <div>
@@ -139,12 +137,12 @@ class MobileList extends React.Component {
 }
 const mapStateToProps = (state) => {
   const {
-        articleList
-    } = state
+    articleList,
+  } = state;
   const { items, isFetching } = articleList || [];
   return {
     items,
-    isFetching
-  }
+    isFetching,
+  };
 };
 export default connect(mapStateToProps)(MobileList);
